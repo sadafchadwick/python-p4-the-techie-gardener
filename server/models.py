@@ -1,30 +1,28 @@
 from config import db
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 
-convention = {
-    "ix": "ix_%(column_0_label)s",
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "pk": "pk_%(table_name)s"
-}
+# convention = {
+#     "ix": "ix_%(column_0_label)s",
+#     "uq": "uq_%(table_name)s_%(column_0_name)s",
+#     "ck": "ck_%(table_name)s_%(constraint_name)s",
+#     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+#     "pk": "pk_%(table_name)s"
+# }
 
-metadata = MetaData(naming_convention=convention)
+# metadata = MetaData(naming_convention=convention)
 
-db = SQLAlchemy(metadata=metadata)
+# db = SQLAlchemy(metadata=metadata)
 
 # Models go here!
-class User(db.Model):
-    pass
+# class User(db.Model):
+#     pass
 
 class Greenhouse(db.Model):
     __tablename__='greenhouses'
 
-    id = db.Colum(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     air_temp = db.Column(db.Integer)
     humidity =db.Column(db.Integer)
 
