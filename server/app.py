@@ -59,7 +59,11 @@ class Zones(Resource):
             new_zone = Zone(
                 date_time = data['date_time'],
                 air_temperature = data['air_temperature'],
-                humidity = data['humidity']
+                humidity = data['humidity'],
+                moisture_level = data['moisture_level'],
+                soil_content = data['soil_content'],
+                greenhouse_id = data['greenhouse_id'],
+                plant_id = data['plant_id']
             )
         except ValueError:
             return make_response({"errors": ['validation errors']}, 400)
@@ -83,6 +87,27 @@ class Plants(Resource):
     def get(self):
         plants = [plant.to_dict() for plant in Plant.query.all()]
         return make_response(plants, 200)
+
+    def post (self):
+        try:
+            data = request.get_json()
+            new_plant = Plant(
+                name = data['name'],
+                diameter = data['diameter'],
+                height = data['height'],
+                expected_yield = data['expected_yield'],
+                temperature_range = data['temperature_range'],
+                moisture_range = data['moisture_range'],
+                sunlight_range = data['sunlight_range'],
+                symbiotic_relations = data['symbiotic_relations'],
+                growth_time = data['growth_time']
+            )
+        except ValueError:
+            return make_response({"errors": ['validation errors']}, 400)
+
+        db.session.add(new_plant)
+        db.session.commit()
+        return make_response(new_plant.to_dict(), 201)
 
 api.add_resource(Plants, '/plants')
 
