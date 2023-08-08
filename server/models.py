@@ -28,6 +28,7 @@ class Plant(db.Model):
     moisture_range=db.Column(db.Integer)
     sunlight_range=db.Column(db.Integer)
     symbiotic_relations=db.Column(db.String)
+    growth_time = db.Column(db.Integer)
 
     # relationships
     plant_bed= db.relationship('PlantBed', back_populates ='plants')
