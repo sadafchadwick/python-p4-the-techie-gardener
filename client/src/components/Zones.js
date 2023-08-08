@@ -44,13 +44,15 @@ function Zones() {
     const foot = plantbedDim.width / plantbedSize
     const inch = foot / 12
 
-    //////////
-
+    //calculates max amount of plants
     const maxPlants = Math.floor(
         (plantbedDim.width * plantbedDim.height) / (3 * inch * 3 * inch)
     );
-    const [planterCount, setPlanterCount] = useState([])
 
+    //planter info
+    const [planterCount, setPlanterCount] = useState([])
+    
+    //adds carrot to planter
     const addCarrot = () => {
         
         if (planterCount.length > maxPlants) {
@@ -69,23 +71,59 @@ function Zones() {
         setPlanterCount([...planterCount, carrot]);
     };
 
-    const renderPlants = planterCount.map((plant, index) => (
-        <div
-            key={index} // Use index as key since there's no unique ID
-            style={{
-                width: plant.width + "px",
-                height: plant.height + "px",
-                backgroundColor: plant.color,
-            }}
-            className="plant"
-        ></div>
-    ));
+    //adds potatoes to planter
+    const addPotato = () => {
+        
+        if (planterCount.length > maxPlants) {
+            // Show an error message if there's no more space
+            console.log("No more space to plant!");
+            return;
+        }
+
+        const potato = {
+            // 'key' : `${planterCount.length + 1}`,
+            name: "potato",
+            color: "brown",
+            width: `${10 * inch}`,
+            height: `${10 * inch}`,
+        };
+        setPlanterCount([...planterCount, potato]);
+    };
+
+    // const sortedPlants = []
+    // planterCount.forEach(obj => {
+    //     const name = obj.name
+    //     if (!sortedPlants[name]) {
+    //         sortedPlants[name] = []
+    //     }
+    //     sortedPlants[name].push(obj)
+    // })
+    
+    // const [finalPlants, setFinalPlants] = useState([])
+
+    // useEffect(() => {
+    //     setFinalPlants([...finalPlants, sortedPlants.potato, sortedPlants.carrot])
+    // }, [planterCount])
+
+    
+    
+    // const renderPlants = finalPlants.map((plant, index) => (
+    //     <div
+    //         key={index} // Use index as key since there's no unique ID
+    //         style={{
+    //             width: plant.width + "px",
+    //             height: plant.height + "px",
+    //             backgroundColor: plant.color,
+    //         }}
+    //         className="plant"
+    //     ></div>
+    // ));
 
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" ref={divRef}>
-                    {renderPlants}
+                    {/* {renderPlants} */}
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
@@ -94,7 +132,8 @@ function Zones() {
                 </div>
             )}
             <div>
-                <button onClick={addCarrot}>Add Veg</button>
+                <button onClick={addCarrot}>Add Carrot</button>
+                <button onClick={addPotato}>Add Potato</button>
             </div>
         </div>
     );

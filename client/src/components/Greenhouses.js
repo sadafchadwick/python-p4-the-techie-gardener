@@ -23,6 +23,7 @@ function Greenhouses() {
             {/* Render relevant information about the greenhouse */}
             <p>ID: {greenhouse.id}</p>
             <p>Air Temperature: {greenhouse.air_temp}</p>
+            <p>Humidity: {greenhouse.humidity}</p>
             {/* Add more attributes as needed */}
           </li>
         ))}
