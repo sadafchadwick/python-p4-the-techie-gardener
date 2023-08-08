@@ -9,7 +9,7 @@ class Greenhouse(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     air_temp = db.Column(db.Integer)
-    humidity =db.Column(db.Integer)
+    humidity = db.Column(db.Integer)
 
     # relationships
     zones = db.relationship('Zone', back_populates ='greenhouse')
@@ -26,12 +26,13 @@ class Plant(db.Model):
     expected_yield=db.Column(db.Integer)
     temperature_range=db.Column(db.Integer)
     moisture_range=db.Column(db.Integer)
-    humidity_range=db.Column(db.Integer)
+    sunlight_range=db.Column(db.Integer)
     symbiotic_relations=db.Column(db.String)
 
     # relationships
-    zones= db.relationship('Zone', back_populates ='plants')
+    plant_bed= db.relationship('PlantBed', back_populates ='plants')
     greenhouse = association_proxy('plants', 'greenhouse')
+    zone= association_proxy('plants', 'zones')
 
 
 class Zone(db.Model):
@@ -49,5 +50,23 @@ class Zone(db.Model):
     plant_id=db.Column(db.Integer, db.ForeignKey('plants.id'))
 
     # relationships
-    greenhouse= db.relationship('Greenhouse', back_populates ='zone')
-    plants= db.relationship('Plant', back_populates ='zones')
+    greenhouse= db.relationship('Greenhouse', back_populates ='zones')
+    plant_beds= db.relationship('PlantBed', back_populates ='zone')
+    plants=association_proxy('zone', 'plants')
+
+
+class PlantBed(db.Model):
+    __tablename__ = 'plant_beds'
+
+    id=db.Column(db.Integer, primary_key=True)
+
+    #Foreign Keys
+    plant_id=db.Column(db.Integer, db.ForeignKey('plants.id'))
+    zone_id=db.Column(db.Integer, db.ForeignKey('zones.id'))
+
+    #relationships
+    zone= db.relationship('Zone', back_populates ='plant_beds')
+    plants= db.relationship('Plant', back_populates ='plant_bed')
+
+    # zone = association_proxy('plants', 'zones')
+    # plants = association_proxy('zones', 'plants')
