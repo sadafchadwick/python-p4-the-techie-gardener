@@ -55,7 +55,7 @@ class Plants(Resource):
         plants = [plant.to_dict() for plant in Plant.query.all()]
         return make_response(plants, 200)
 
-api.add_resource(Plants, '/[plants')
+api.add_resource(Plants, '/plants')
 
 class PlantsById(Resource):
     def get(self, id):
