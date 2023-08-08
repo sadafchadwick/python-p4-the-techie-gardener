@@ -3,21 +3,6 @@ from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 
-# convention = {
-#     "ix": "ix_%(column_0_label)s",
-#     "uq": "uq_%(table_name)s_%(column_0_name)s",
-#     "ck": "ck_%(table_name)s_%(constraint_name)s",
-#     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-#     "pk": "pk_%(table_name)s"
-# }
-
-# metadata = MetaData(naming_convention=convention)
-
-# db = SQLAlchemy(metadata=metadata)
-
-# Models go here!
-# class User(db.Model):
-#     pass
 
 class Greenhouse(db.Model):
     __tablename__='greenhouses'
@@ -27,7 +12,7 @@ class Greenhouse(db.Model):
     humidity =db.Column(db.Integer)
 
     # relationships
-    zones= db.relationship('Zone', back_populates ='greenhouse')
+    zones = db.relationship('Zone', back_populates ='greenhouse')
     plants = association_proxy('greenhouse', 'plants')
 
 
