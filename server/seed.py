@@ -11,6 +11,29 @@ from models import Greenhouse, Zone, Plant
 from app import app
 from models import db
 
+greenhouses = []
+
+g1 = Greenhouse(
+    air_temp = 85,
+    humidity = 56
+)
+greenhouses.append(g1)
+
+g2 = Greenhouse(
+    air_temp = 90,
+    humidity = 65
+)
+greenhouses.append(g2)
+
+g3 = Greenhouse(
+    air_temp = 75,
+    humidity = 30
+)
+greenhouses.append(g3)
+
+
+
+
 plants = []
 
 p1 = Plant(
