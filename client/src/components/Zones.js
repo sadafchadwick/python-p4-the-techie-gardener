@@ -62,7 +62,6 @@ function Zones() {
         }
 
         const carrot = {
-            // 'key' : `${planterCount.length + 1}`,
             name: "carrot",
             color: "orange",
             width: `${3 * inch}`,
@@ -81,7 +80,6 @@ function Zones() {
         }
 
         const potato = {
-            // 'key' : `${planterCount.length + 1}`,
             name: "potato",
             color: "brown",
             width: `${10 * inch}`,
@@ -90,40 +88,33 @@ function Zones() {
         setPlanterCount([...planterCount, potato]);
     };
 
-    // const sortedPlants = []
-    // planterCount.forEach(obj => {
-    //     const name = obj.name
-    //     if (!sortedPlants[name]) {
-    //         sortedPlants[name] = []
-    //     }
-    //     sortedPlants[name].push(obj)
-    // })
+    //sorts the planerCount by type of plant (can sort by other attributes if you change name, ie temp range)
+    const sortedPlants = planterCount.slice().sort((a, b) => a.name.localeCompare(b.name))
+    const alignedPlants = sortedPlants.reduce((plants, obj) => {
+        plants.push(obj)
+        return plants
+    }, [])
     
-    // const [finalPlants, setFinalPlants] = useState([])
+    //renders the plants on screen
+    const renderPlants = alignedPlants.map((plant, index) => (
+        <div
+            key={index} // Use index as key since there's no unique ID
+            style={{
+                width: plant.width + "px",
+                height: plant.height + "px",
+                backgroundColor: plant.color,
+            }}
+            className="plant"
+        ></div>
+    ));
 
-    // useEffect(() => {
-    //     setFinalPlants([...finalPlants, sortedPlants.potato, sortedPlants.carrot])
-    // }, [planterCount])
-
-    
-    
-    // const renderPlants = finalPlants.map((plant, index) => (
-    //     <div
-    //         key={index} // Use index as key since there's no unique ID
-    //         style={{
-    //             width: plant.width + "px",
-    //             height: plant.height + "px",
-    //             backgroundColor: plant.color,
-    //         }}
-    //         className="plant"
-    //     ></div>
-    // ));
+    console.log(alignedPlants)
 
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" ref={divRef}>
-                    {/* {renderPlants} */}
+                    {renderPlants}
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
