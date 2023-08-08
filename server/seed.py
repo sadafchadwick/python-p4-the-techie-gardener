@@ -125,4 +125,5 @@ if __name__ == '__main__':
         # Seed code goes here!
         Plant.query.delete()
         db.session.add_all(plants)
+        db.session.add_all(greenhouses)
         db.session.commit()
