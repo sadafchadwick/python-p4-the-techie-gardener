@@ -16,7 +16,7 @@ from models import Greenhouse, Zone, Plant, PlantBed
 
 @app.route('/')
 def index():
-    return '<h1>Phase 4 Project Server</h1>'
+    return '<h1>The Techie Gardener</h1>'
 
 class Greenhouses(Resource):
     def get(self):
@@ -45,6 +45,29 @@ class GreenhousesById(Resource):
         if not greenhouse:
             return make_response({"error":"Greenhouse does not exist you mother forker!"},404)
         return make_response(greenhouse.to_dict())
+
+    def patch(self, id):
+        try:
+            greenhouse = Greenhouse.query.filter_by(id = id).first()
+            data = request.get_json()
+            for attr in data:
+                setattr(greenhouse, attr, data[attr])
+            db.session.commit()
+            return make_response(greenhouse.to_dict(), 202)
+        except AttributeError:
+            return make_response({"error": "Greenhouse does not exists!"}, 404)
+        except ValueError:
+            return make_response({"errors": ["validation errors"]}, 400)
+
+    def delete(self, id):
+        try:
+            greenhouse = Greenhouse.query.filter_by(id = id).first()
+        except:
+            return make_response({"error": "Greenhouse not found"}, 404)
+
+        db.session.delete(greenhouse)
+        db.session.commit()
+        return make_response({}, 204)
 
 api.add_resource(GreenhousesById, '/greenhouses/<int:id>')
 
@@ -80,6 +103,29 @@ class ZonesById(Resource):
         if not zone:
             return make_response({"error":"That zone does not exist you fool!"},404)
         return make_response(zone.to_dict())
+
+    def patch(self, id):
+        try:
+            zone = Zone.query.filter_by(id = id).first()
+            data = request.get_json()
+            for attr in data:
+                setattr(zone, attr, data[attr])
+            db.session.commit()
+            return make_response(zone.to_dict(), 202)
+        except AttributeError:
+            return make_response({"error": "Zone does not exists!"}, 404)
+        except ValueError:
+            return make_response({"errors": ["validation errors"]}, 400)
+
+    def delete(self, id):
+        try:
+            zone = Zone.query.filter_by(id = id).first()
+        except:
+            return make_response({"error": "Zone does not exist in this matrix!"}, 404)
+
+        db.session.delete(zone)
+        db.session.commit()
+        return make_response({}, 204)
 
 api.add_resource(ZonesById, '/zones/<int:id>')
 
@@ -117,6 +163,29 @@ class PlantsById(Resource):
         if not plant:
             return make_response({"error":"That plant does not exist you banana shaped fork!"},404)
         return make_response(plant.to_dict())
+
+    def patch(self, id):
+        try:
+            plant = Plant.query.filter_by(id = id).first()
+            data = request.get_json()
+            for attr in data:
+                setattr(plant, attr, data[attr])
+            db.session.commit()
+            return make_response(zone.to_dict(), 202)
+        except AttributeError:
+            return make_response({"error": "Plant was never planted!"}, 404)
+        except ValueError:
+            return make_response({"errors": ["validation errors"]}, 400)
+
+    def delete(self, id):
+        try:
+            plant = Plant.query.filter_by(id = id).first()
+        except:
+            return make_response({"error": "This plant was never planted!"}, 404)
+
+        db.session.delete(plant)
+        db.session.commit()
+        return make_response({}, 204)
 
 api.add_resource(PlantsById, '/plants/<int:id>')
 

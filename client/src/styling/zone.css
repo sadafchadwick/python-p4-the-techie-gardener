@@ -5,11 +5,23 @@
     max-height: 500px;
     display: flex;
     justify-content: center;
-    background-color: blue;
+    background-color: rgba(0, 0, 0, 0.198);
 }
 
 .plantbed {
     width: 700px;
     height: 400px;
-    background-color: brown;
+    background-color: burlywood;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: flex-start; /* Start from the left */
+    align-content: flex-start; /* Start from the top */
+}
+
+.plant {
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: orange;
+    flex: 0 0 auto; /* Allow items to grow and shrink equally */
+    box-sizing: border-box; /* Include borders and padding in width and height */
 }
