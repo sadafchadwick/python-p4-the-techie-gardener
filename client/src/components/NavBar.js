@@ -9,6 +9,8 @@ function NavBar() {
         <NavLink to="/greenhouses">YOUR GREENHOUSES</NavLink>
         <NavLink to="/zones">YOUR ZONES</NavLink>
         <NavLink to="/plants">YOUR PLANTS</NavLink>
+        <NavLink to="/addplants">PLANT NEW PLANTS</NavLink>
+
     </nav>
     )
 }

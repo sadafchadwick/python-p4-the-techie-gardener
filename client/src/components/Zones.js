@@ -159,7 +159,7 @@ function Zones() {
                 <select value={selectedPlant.name} onChange={handleOptionChange}>
                     <option value=''>Select...</option>
                     {allPlants.map(item => (
-                        <option key={item.id} value={item.value}>
+                        <option key={item.id} value={item.name}>
                             {item.name}
                         </option>
                     ))}

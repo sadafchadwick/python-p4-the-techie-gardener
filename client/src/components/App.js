@@ -3,7 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import Greenhouses from "./Greenhouses"; // Import your components
 import Zones from "./Zones";
 import Plants from "./Plants";
-import NavBar from "./NavBar"
+import NavBar from "./NavBar";
+
 
 function App() {
   return (
