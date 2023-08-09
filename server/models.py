@@ -1,20 +1,10 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from config import db
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
 
-db = SQLAlchemy(metadata=metadata)
-
-
-class Greenhouse(db.Model,SerializerMixin):
+class Greenhouse(db.Model, SerializerMixin):
     __tablename__='greenhouses'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -26,11 +16,12 @@ class Greenhouse(db.Model,SerializerMixin):
     plants = association_proxy('greenhouse', 'plants')
 
 
-class Plant(db.Model,SerializerMixin):
+class Plant(db.Model, SerializerMixin):
     __tablename__= 'plants'
 
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String)
+    planted_on = db.Column(db.DateTime, server_default=db.func.now())
     diameter=db.Column(db.Integer)
     height=db.Column(db.Integer)
     expected_yield=db.Column(db.Integer)
@@ -39,6 +30,7 @@ class Plant(db.Model,SerializerMixin):
     sunlight_range=db.Column(db.Integer)
     symbiotic_relations=db.Column(db.String)
     growth_time = db.Column(db.Integer)
+    color = db.Column(db.String)
 
     # relationships
     plant_bed= db.relationship('PlantBed', back_populates ='plants')
@@ -46,11 +38,10 @@ class Plant(db.Model,SerializerMixin):
     zone= association_proxy('plants', 'zones')
 
 
-class Zone(db.Model,SerializerMixin):
+class Zone(db.Model, SerializerMixin):
     __tablename__= 'zones'
 
     id=db.Column(db.Integer, primary_key=True)
-    date_time=db.Column(db.Integer)
     air_temperature=db.Column(db.Integer)
     humidity=db.Column(db.Integer)
     moisture_level=db.Column(db.Integer)
@@ -66,7 +57,7 @@ class Zone(db.Model,SerializerMixin):
     plants=association_proxy('zone', 'plants')
 
 
-class PlantBed(db.Model):
+class PlantBed(db.Model, SerializerMixin):
     __tablename__ = 'plant_beds'
 
     id=db.Column(db.Integer, primary_key=True)

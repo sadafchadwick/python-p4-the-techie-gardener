@@ -19,9 +19,8 @@
 }
 
 .plant {
-    border: 1px solid black;
+    /* border: 2px solid white; */
     border-radius: 50%;
-    background-color: orange;
     flex: 0 0 auto; /* Allow items to grow and shrink equally */
     box-sizing: border-box; /* Include borders and padding in width and height */
 }
