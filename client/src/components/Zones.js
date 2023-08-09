@@ -39,6 +39,17 @@ function Zones() {
             ]
         }
     //console.log(user.greenhouses[0].zones[0].id[0])
+    
+    //planter info
+    const [planterCount, setPlanterCount] = useState([])
+    const [selectedPlant, setSelectedPlant] = useState('')
+    const [quantity, setQuantity] = useState('')
+    const [unsortedPlants, setUnsortedPlants] = useState([])
+    //window size state
+    const [windowSize, setWindowSize] = useState({
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
 
     //fetches all plants in our db
     const [allPlants, setAllPlants] = useState([])
@@ -48,20 +59,6 @@ function Zones() {
         .then(plants => setAllPlants(plants))
     }, [])
 
-    //window size state
-    const [windowSize, setWindowSize] = useState({
-        height: window.innerHeight,
-        width: window.innerWidth
-    })
-
-    //changes window size
-    const handleWindowSize = () => {
-        setWindowSize({
-            height: window.innerHeight,
-            width: window.innerWidth
-        })
-    }
-
     //listens for changes to window size
     useEffect(() => {
         window.addEventListener('resize', handleWindowSize)
@@ -70,12 +67,6 @@ function Zones() {
         )
     }, [])
 
-    //measures the plantbed div
-    const divRef = useRef(null)
-    const [plantbedDim, setPlantbedDim] = useState({
-        width: 0,
-        height: 0
-    })
     useEffect(() => {
         const dimensions = divRef.current.getBoundingClientRect()
         setPlantbedDim({
@@ -83,6 +74,21 @@ function Zones() {
             height: dimensions.height
         })
     }, [windowSize])
+
+    //changes window size
+    const handleWindowSize = () => {
+        setWindowSize({
+            height: window.innerHeight,
+            width: window.innerWidth
+        })
+    }
+    
+    //measures the plantbed div
+    const divRef = useRef(null)
+    const [plantbedDim, setPlantbedDim] = useState({
+        width: 0,
+        height: 0
+    })
 
     //measures an inch for other values
     let plantbedSize = 7 //this number comes from database for the width of the planter
@@ -103,46 +109,6 @@ function Zones() {
     const maxPlants = Math.floor(
         (plantbedDim.width * plantbedDim.height) / (3 * inch * 3 * inch)
     );
-
-    //planter info
-    const [planterCount, setPlanterCount] = useState([])
-
-    //adds plants to planterCount
-    const addPlant = () => {
-        if (planterCount.length > maxPlants) {
-            // Show an error message if there's no more space
-            console.log("No more space to plant!");
-            return;
-        }
-        const plant = {
-            name: selectedPlant.name,
-            width: selectedPlant.diameter * inch,
-            height: selectedPlant.diameter * inch,
-            color: selectedPlant.color,
-            temperature_range: selectedPlant.temperature_range,
-            moisture_range: selectedPlant.moisture_range,
-            sunlight_range: selectedPlant.sunlight_range,
-            growth_time: selectedPlant.growth_time
-        }
-        setPlanterCount([...planterCount, plant]);
-    }
-
-    // renders the plants on screen
-    // const renderPlants = alignedPlants.map((plant, index) => (
-    //     <div
-    //         key={index} // Use index as key since there's no unique ID
-    //         style={{
-    //             width: plant.width + "px",
-    //             height: plant.height + "px",
-    //             backgroundColor: plant.color,
-    //         }}
-    //         className="plant"
-    //     ></div>
-    // ));
-
-    const [selectedPlant, setSelectedPlant] = useState('')
-    const [quantity, setQuantity] = useState('')
-    const [unsortedPlants, setUnsortedPlants] = useState([])
 
     //sets which new plant is to be added
     const handleVegChange = (e) => {
@@ -167,13 +133,30 @@ function Zones() {
         }
     }
 
-    console.log(unsortedPlants)
+    //renders the plants on screen
+    const renderPlants = unsortedPlants.map((plant, index) => {
+        const plantSize = plant.diameter * inch;
+        return (
+            <div className={plantSize > foot ? "large_plant" : "small_plant"}>
+                <div
+                    key={index}
+                    style={{
+                        backgroundColor: plant.color,
+                        width: plantSize,
+                        height: plantSize,
+                    }}
+                    className="plant"
+                ></div>
+            </div>
+            
+        );
+    });
 
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" style={plantBedGrid} ref={divRef}>
-                    {/* {renderPlants} */}
+                    {renderPlants}
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
