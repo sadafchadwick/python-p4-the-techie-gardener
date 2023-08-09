@@ -9,6 +9,7 @@ function NavBar() {
         <NavLink to="/greenhouses">YOUR GREENHOUSES</NavLink>
         <NavLink to="/zones">YOUR ZONES</NavLink>
         <NavLink to="/plants">YOUR PLANTS</NavLink>
+        <div className="glow-on-hover"></div>
     </nav>
     )
 }
