@@ -12,6 +12,7 @@ function App() {
     <div>
       <h1 id="title">THE TECHIE GARDENER</h1>
       <NavBar />
+      
       <Switch>
         <Route exact path="/">
           <Home />
