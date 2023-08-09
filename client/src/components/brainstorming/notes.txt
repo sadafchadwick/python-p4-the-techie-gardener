@@ -82,3 +82,32 @@
                 </select> */}
                 {/* <button onClick={addPlant}>Add</button> */}
             </div>
+
+
+                //adds plants to planterCount
+    // const addPlant = () => {
+    //     if (planterCount.length > maxPlants) {
+    //         // Show an error message if there's no more space
+    //         console.log("No more space to plant!");
+    //         return;
+    //     }
+        
+    //     // const numPlantsToAdd = Math.min(quantity, availableSpace);
+    //     // const newPlants = Array.from({ length: numPlantsToAdd }, () => selectedPlant);
+
+    //     // setUnsortedPlants(prevPlants => [...prevPlants, ...newPlants]);
+    //     // setQuantity('');
+    //     // }
+
+    //     const plant = {
+    //         name: selectedPlant.name,
+    //         width: selectedPlant.diameter * inch,
+    //         height: selectedPlant.diameter * inch,
+    //         color: selectedPlant.color,
+    //         temperature_range: selectedPlant.temperature_range,
+    //         moisture_range: selectedPlant.moisture_range,
+    //         sunlight_range: selectedPlant.sunlight_range,
+    //         growth_time: selectedPlant.growth_time
+    //     }
+    //     setPlanterCount([...planterCount, plant]);
+    // }
