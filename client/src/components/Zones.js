@@ -3,6 +3,42 @@ import "../styling/zone.css"
 import React, { useRef, useEffect, useState } from "react"
 
 function Zones() {
+    const user = 
+        {
+            id: 1,
+            name: 'Nolan',
+            greenhouses: [
+                {
+                    id: 1,
+                    name: 'Backyard',
+                    zones: [
+                        {
+                            id: 1
+                        },
+                        {
+                            id: 2
+                        },
+                        {
+                            id: 3
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: 'Frontyard',
+                    zones: [
+                        {
+                            id: 1
+                        },
+                        {
+                            id: 2
+                        }
+                    ]
+                },
+            ]
+        }
+    //console.log(user.greenhouses[0].zones[0].id[0])
+
     const [allPlants, setAllPlants] = useState([])
 
     useEffect(() => {
@@ -79,7 +115,11 @@ function Zones() {
             name: selectedPlant.name,
             width: selectedPlant.diameter * inch,
             height: selectedPlant.diameter * inch,
-            color: selectedPlant.color
+            color: selectedPlant.color,
+            temperature_range: selectedPlant.temperature_range,
+            moisture_range: selectedPlant.moisture_range,
+            sunlight_range: selectedPlant.sunlight_range,
+            growth_time: selectedPlant.growth_time
         }
         setPlanterCount([...planterCount, plant]);
     }
@@ -90,6 +130,21 @@ function Zones() {
         plants.push(obj)
         return plants
     }, [])
+
+    //place into greenhouse
+    const tempSort = planterCount.slice().sort((a, b) => {
+        return a.temperature_range - b.temperature_range
+    })
+
+    //place into zone
+    const sunlightSort = tempSort.slice().sort((a, b) => {
+        return a.sunlight_range - b.sunlight_range
+    })
+    
+    //place into indiv section
+    const moistureSort = sunlightSort.slice().sort((a, b) => {
+        return a.moisture_range - b.moisture_range
+    })
     
     //renders the plants on screen
     const renderPlants = alignedPlants.map((plant, index) => (
@@ -104,46 +159,48 @@ function Zones() {
         ></div>
     ));
 
-    const quadrantStyle = {
-        width:`${plantbedDim.width / 2}px`,
-        height:`${plantbedDim.height / 2}px`,
+    // //divides plant bed into 4 quadrants
+    // const quadrantStyle = {
+    //     width:`${plantbedDim.width / 2}px`,
+    //     height:`${plantbedDim.height / 2}px`,
+    // }
+
+    //divides plant bed into 3 sections
+    const sectionStyle = {
+        width:`${plantbedDim.width / 3}px`,
+        height: `${plantbedDim.height}px`
     }
 
-    let maxWidth = 0
-    let maxHeight = 0
-    let maxObject = null
+    // //finds largest plant diameter and sets it as maxObj
+    // let maxWidth = 0
+    // let maxHeight = 0
+    // let maxObject = null
+    // for (const obj of alignedPlants) {
+    //     if (obj.width > maxWidth) {
+    //         maxWidth = obj.width
+    //         maxHeight = obj.height
+    //         maxObject = obj
+    //     }
+    // }
 
-    for (const obj of alignedPlants) {
-        if (obj.width > maxWidth) {
-            maxWidth = obj.width
-            maxHeight = obj.height
-            maxObject = obj
-        }
-    }
-
-    let columnCount = plantbedDim.width / maxWidth
-    let columnWidth = 100 / columnCount
-
-    let rowCount = plantbedDim.height / maxHeight
-    let rowWidth = 100 / rowCount
-
+    // //calculates the columns and rows for the plantbed
+    // let columnCount = Math.floor(plantbedDim.width / maxWidth)
+    // let columnWidth = 100 / columnCount
+    // let rowCount = Math.floor(plantbedDim.height / maxHeight)
+    // let rowWidth = 100 / rowCount
     // const plantBedColumns = {
     //     gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
     //     gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
-    //     backgroundColor: 'blue'
     // }
-    console.log(columnCount, columnWidth)
-    // console.log(plantBedColumns)
 
     return (
         <div>
             <div className="plantbed_container">
-                <div className="plantbed" style={{
-                    gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
-                    gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
-                    backgroundColor: 'blue'
-                    }} ref={divRef}>
+                <div className="plantbed" /*style={plantBedColumns}*/ ref={divRef}>
                     {renderPlants}
+                    <div className='section' id='1' style={{backgroundColor:'blue', ...sectionStyle}}></div>
+                    <div className='section' id='2' style={{backgroundColor:'red', ...sectionStyle}}></div>
+                    <div className='section' id='3' style={{backgroundColor:'yellow', ...sectionStyle}}></div>
                     {/* <div className="quadrant" id='1' style={{backgroundColor:'blue', ...quadrantStyle}}>1</div>
                     <div className="quadrant" id='2' style={{backgroundColor:'red', ...quadrantStyle}}>2</div>
                     <div className="quadrant" id='3' style={{backgroundColor:'green', ...quadrantStyle}}>3</div>
