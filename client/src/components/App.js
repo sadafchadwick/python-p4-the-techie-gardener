@@ -4,16 +4,17 @@ import Greenhouses from "./Greenhouses"; // Import your components
 import Zones from "./Zones";
 import Plants from "./Plants";
 import NavBar from "./NavBar";
-
+import Home from "./Home";
+import '../styling/index.css';
 
 function App() {
   return (
     <div>
-      <h1>THE TECHIE GARDENER</h1>
+      <h1 id="title">THE TECHIE GARDENER</h1>
       <NavBar />
       <Switch>
         <Route exact path="/">
-          <h1>we are back to the front end!! BEEYOTCH</h1>
+          <Home />
         </Route>
 
         <Route path="/greenhouses">
