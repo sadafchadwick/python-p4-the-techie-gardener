@@ -20,14 +20,14 @@
     /* grid-row-end: 5; */
 }
 
-/* .plantbed {
+.plantbed {
     width: 700px;
     height: 400px;
     background-color: burlywood;
     display: grid;
     /* grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 20% 20% 20% 20% 20%; */
-
+}
 
 /* .plantbed {
     width: 700px;

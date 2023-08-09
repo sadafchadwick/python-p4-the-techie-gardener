@@ -2,9 +2,9 @@ from config import db, bcrypt
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from flask_bcrypt import Bcrypt
+# from flask_bcrypt import Bcrypt
 
-bcrypt = Bcrypt( app )
+# bcrypt = Bcrypt( app )
 
 class Greenhouse(db.Model, SerializerMixin):
     __tablename__='greenhouses'

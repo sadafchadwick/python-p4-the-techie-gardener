@@ -89,6 +89,16 @@ function Zones() {
     const foot = plantbedDim.width / plantbedSize
     const inch = foot / 12
 
+    //sets up size of grid
+    let columnCount = Math.floor(plantbedDim.width / foot)
+    let columnWidth = 100 / columnCount
+    let rowCount = Math.floor(plantbedDim.height / foot)
+    let rowWidth = 100 / rowCount
+    const plantBedGrid = {
+        gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
+        gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
+    }
+
     //calculates max amount of plants
     const maxPlants = Math.floor(
         (plantbedDim.width * plantbedDim.height) / (3 * inch * 3 * inch)
@@ -96,16 +106,6 @@ function Zones() {
 
     //planter info
     const [planterCount, setPlanterCount] = useState([])
-
-    //DEPRECATED!!!
-    //chooses selected plant from dropdown menu and sets selectedPlant to obj on dropdown
-    // const [selectedPlant, setSelectedPlant] = useState('')
-    // const handleOptionChange = (e) => {
-    //     const selectedValue = e.target.value
-    //     const selectedObj = allPlants.find(item => item.name === selectedValue)
-    //     setSelectedPlant(selectedObj)
-    // }
-    //DEPRECATED!!!
 
     //adds plants to planterCount
     const addPlant = () => {
@@ -127,41 +127,7 @@ function Zones() {
         setPlanterCount([...planterCount, plant]);
     }
 
-    // //sorts the planerCount by type of plant (can sort by other attributes if you change name, ie temp range)
-    // const sortedPlants = planterCount.slice().sort((a, b) => a.name.localeCompare(b.name))
-    // const alignedPlants = sortedPlants.reduce((plants, obj) => {
-    //     plants.push(obj)
-    //     return plants
-    // }, [])
-
-    // //place into greenhouse
-    // const tempSort = planterCount.slice().sort((a, b) => {
-    //     return a.temperature_range - b.temperature_range
-    // })
-
-    // //place into zone
-    // const sunlightSort = tempSort.slice().sort((a, b) => {
-    //     return a.sunlight_range - b.sunlight_range
-    // })
-    
-    // //place into indiv section
-    // const moistureSort = sunlightSort.slice().sort((a, b) => {
-    //     return a.moisture_range - b.moisture_range
-    // })
-
-    // //divides plant bed into 4 quadrants
-    // const quadrantStyle = {
-    //     width:`${plantbedDim.width / 2}px`,
-    //     height:`${plantbedDim.height / 2}px`,
-    // }
-
-    //divides plant bed into 3 sections
-    const sectionStyle = {
-        width:`${plantbedDim.width / 3}px`,
-        height: `${plantbedDim.height}px`
-    }
-
-        //renders the plants on screen
+    // renders the plants on screen
     // const renderPlants = alignedPlants.map((plant, index) => (
     //     <div
     //         key={index} // Use index as key since there's no unique ID
@@ -173,28 +139,6 @@ function Zones() {
     //         className="plant"
     //     ></div>
     // ));
-
-    // //finds largest plant diameter and sets it as maxObj
-    // let maxWidth = 0
-    // let maxHeight = 0
-    // let maxObject = null
-    // for (const obj of alignedPlants) {
-    //     if (obj.width > maxWidth) {
-    //         maxWidth = obj.width
-    //         maxHeight = obj.height
-    //         maxObject = obj
-    //     }
-    // }
-
-    // //calculates the columns and rows for the plantbed
-    // let columnCount = Math.floor(plantbedDim.width / maxWidth)
-    // let columnWidth = 100 / columnCount
-    // let rowCount = Math.floor(plantbedDim.height / maxHeight)
-    // let rowWidth = 100 / rowCount
-    // const plantBedColumns = {
-    //     gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
-    //     gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
-    // }
 
     const [selectedPlant, setSelectedPlant] = useState('')
     const [quantity, setQuantity] = useState('')
@@ -228,15 +172,8 @@ function Zones() {
     return (
         <div>
             <div className="plantbed_container">
-                <div className="plantbed" /*style={plantBedColumns}*/ ref={divRef}>
+                <div className="plantbed" style={plantBedGrid} ref={divRef}>
                     {/* {renderPlants} */}
-                    <div className='section' id='1' style={{backgroundColor:'blue', ...sectionStyle}}></div>
-                    <div className='section' id='2' style={{backgroundColor:'red', ...sectionStyle}}></div>
-                    <div className='section' id='3' style={{backgroundColor:'yellow', ...sectionStyle}}></div>
-                    {/* <div className="quadrant" id='1' style={{backgroundColor:'blue', ...quadrantStyle}}>1</div>
-                    <div className="quadrant" id='2' style={{backgroundColor:'red', ...quadrantStyle}}>2</div>
-                    <div className="quadrant" id='3' style={{backgroundColor:'green', ...quadrantStyle}}>3</div>
-                    <div className="quadrant" id='4' style={{backgroundColor:'yellow', ...quadrantStyle}}>4</div> */}
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
@@ -244,7 +181,6 @@ function Zones() {
                     <p>No more space to plant!</p>
                 </div>
             )}
-
             <div>
                 <form onSubmit = {handleSubmit}>
                     <label>
@@ -264,33 +200,9 @@ function Zones() {
                     </label>
                     <button type='submit'>Add</button>
                 </form>
-                {/* <ul>
-                    {vegetableList.map((item, index) => (
-                        <li key={index}>
-                            {item.quantity}
-                            {item.vegetable}
-                        </li>
-                    ))}
-                </ul> */}
-            </div>
-
-            <div>
-                {/* <select value={selectedPlant.name} onChange={handleOptionChange}>
-                    <option value=''>Select...</option>
-                    {allPlants.map(item => (
-                        <option key={item.id} value={item.name}>
-                            {item.name}
-                        </option>
-                    ))}
-                </select> */}
-                {/* <button onClick={addPlant}>Add</button> */}
             </div>
         </div>
     );
-
 }
 
-    export default Zones;
-
-    
-
+export default Zones;
