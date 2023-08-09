@@ -5,10 +5,11 @@ import Zones from "./Zones";
 import Plants from "./Plants";
 import NavBar from "./NavBar";
 
+
 function App() {
   return (
     <div>
-      <h1>Phase 4 Project Client</h1>
+      <h1>THE TECHIE GARDENER</h1>
       <NavBar />
       <Switch>
         <Route exact path="/">
