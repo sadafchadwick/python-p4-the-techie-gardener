@@ -75,13 +75,12 @@ function Zones() {
             console.log("No more space to plant!");
             return;
         }
-        const plant ={
+        const plant = {
             name: selectedPlant.name,
             width: selectedPlant.diameter * inch,
             height: selectedPlant.diameter * inch,
             color: selectedPlant.color
         }
-        console.log(plant)
         setPlanterCount([...planterCount, plant]);
     }
 
@@ -110,15 +109,45 @@ function Zones() {
         height:`${plantbedDim.height / 2}px`,
     }
 
+    let maxWidth = 0
+    let maxHeight = 0
+    let maxObject = null
+
+    for (const obj of alignedPlants) {
+        if (obj.width > maxWidth) {
+            maxWidth = obj.width
+            maxHeight = obj.height
+            maxObject = obj
+        }
+    }
+
+    let columnCount = plantbedDim.width / maxWidth
+    let columnWidth = 100 / columnCount
+
+    let rowCount = plantbedDim.height / maxHeight
+    let rowWidth = 100 / rowCount
+
+    // const plantBedColumns = {
+    //     gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
+    //     gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
+    //     backgroundColor: 'blue'
+    // }
+    console.log(columnCount, columnWidth)
+    // console.log(plantBedColumns)
+
     return (
         <div>
             <div className="plantbed_container">
-                <div className="plantbed" ref={divRef}>
+                <div className="plantbed" style={{
+                    gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
+                    gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
+                    backgroundColor: 'blue'
+                    }} ref={divRef}>
                     {renderPlants}
-                    <div className="quadrant" id='1' style={{backgroundColor:'blue', ...quadrantStyle}}>1</div>
+                    {/* <div className="quadrant" id='1' style={{backgroundColor:'blue', ...quadrantStyle}}>1</div>
                     <div className="quadrant" id='2' style={{backgroundColor:'red', ...quadrantStyle}}>2</div>
                     <div className="quadrant" id='3' style={{backgroundColor:'green', ...quadrantStyle}}>3</div>
-                    <div className="quadrant" id='4' style={{backgroundColor:'yellow', ...quadrantStyle}}>4</div>
+                    <div className="quadrant" id='4' style={{backgroundColor:'yellow', ...quadrantStyle}}>4</div> */}
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
