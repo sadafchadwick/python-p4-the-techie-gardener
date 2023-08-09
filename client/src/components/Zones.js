@@ -114,6 +114,14 @@ function Zones() {
             console.log("No more space to plant!");
             return;
         }
+        
+        // const numPlantsToAdd = Math.min(quantity, availableSpace);
+        // const newPlants = Array.from({ length: numPlantsToAdd }, () => selectedPlant);
+
+        // setUnsortedPlants(prevPlants => [...prevPlants, ...newPlants]);
+        // setQuantity('');
+        // }
+
         const plant = {
             name: selectedPlant.name,
             width: selectedPlant.diameter * inch,

@@ -44,21 +44,3 @@
     align-self: center;
     justify-self: center;
 }
-
-
-/* .plantbed {
-    width: 700px;
-    height: 400px;
-    background-color: burlywood;
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line 
-    justify-content: flex-start; /* Start from the left 
-    align-content: flex-start; /* Start from the top 
-} */
-
-/* .plant {
-    /* border: 2px solid white; 
-    border-radius: 50%;
-    flex: 0 0 auto; /* Allow items to grow and shrink equally 
-    box-sizing: border-box; /* Include borders and padding in width and height 
-} */
