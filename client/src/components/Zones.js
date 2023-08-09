@@ -3,6 +3,7 @@ import "../styling/zone.css"
 import React, { useRef, useEffect, useState } from "react"
 
 function Zones() {
+    //placeholder user info
     const user = 
         {
             id: 1,
@@ -39,8 +40,8 @@ function Zones() {
         }
     //console.log(user.greenhouses[0].zones[0].id[0])
 
+    //fetches all plants in our db
     const [allPlants, setAllPlants] = useState([])
-
     useEffect(() => {
         fetch('http://localhost:5555/plants')
         .then(r => r.json())
@@ -96,13 +97,15 @@ function Zones() {
     //planter info
     const [planterCount, setPlanterCount] = useState([])
 
+    //DEPRECATED!!!
     //chooses selected plant from dropdown menu and sets selectedPlant to obj on dropdown
-    const [selectedPlant, setSelectedPlant] = useState('')
-    const handleOptionChange = (e) => {
-        const selectedValue = e.target.value
-        const selectedObj = allPlants.find(item => item.name === selectedValue)
-        setSelectedPlant(selectedObj)
-    }
+    // const [selectedPlant, setSelectedPlant] = useState('')
+    // const handleOptionChange = (e) => {
+    //     const selectedValue = e.target.value
+    //     const selectedObj = allPlants.find(item => item.name === selectedValue)
+    //     setSelectedPlant(selectedObj)
+    // }
+    //DEPRECATED!!!
 
     //adds plants to planterCount
     const addPlant = () => {
@@ -124,40 +127,27 @@ function Zones() {
         setPlanterCount([...planterCount, plant]);
     }
 
-    //sorts the planerCount by type of plant (can sort by other attributes if you change name, ie temp range)
-    const sortedPlants = planterCount.slice().sort((a, b) => a.name.localeCompare(b.name))
-    const alignedPlants = sortedPlants.reduce((plants, obj) => {
-        plants.push(obj)
-        return plants
-    }, [])
+    // //sorts the planerCount by type of plant (can sort by other attributes if you change name, ie temp range)
+    // const sortedPlants = planterCount.slice().sort((a, b) => a.name.localeCompare(b.name))
+    // const alignedPlants = sortedPlants.reduce((plants, obj) => {
+    //     plants.push(obj)
+    //     return plants
+    // }, [])
 
-    //place into greenhouse
-    const tempSort = planterCount.slice().sort((a, b) => {
-        return a.temperature_range - b.temperature_range
-    })
+    // //place into greenhouse
+    // const tempSort = planterCount.slice().sort((a, b) => {
+    //     return a.temperature_range - b.temperature_range
+    // })
 
-    //place into zone
-    const sunlightSort = tempSort.slice().sort((a, b) => {
-        return a.sunlight_range - b.sunlight_range
-    })
+    // //place into zone
+    // const sunlightSort = tempSort.slice().sort((a, b) => {
+    //     return a.sunlight_range - b.sunlight_range
+    // })
     
-    //place into indiv section
-    const moistureSort = sunlightSort.slice().sort((a, b) => {
-        return a.moisture_range - b.moisture_range
-    })
-    
-    //renders the plants on screen
-    const renderPlants = alignedPlants.map((plant, index) => (
-        <div
-            key={index} // Use index as key since there's no unique ID
-            style={{
-                width: plant.width + "px",
-                height: plant.height + "px",
-                backgroundColor: plant.color,
-            }}
-            className="plant"
-        ></div>
-    ));
+    // //place into indiv section
+    // const moistureSort = sunlightSort.slice().sort((a, b) => {
+    //     return a.moisture_range - b.moisture_range
+    // })
 
     // //divides plant bed into 4 quadrants
     // const quadrantStyle = {
@@ -170,6 +160,19 @@ function Zones() {
         width:`${plantbedDim.width / 3}px`,
         height: `${plantbedDim.height}px`
     }
+
+        //renders the plants on screen
+    // const renderPlants = alignedPlants.map((plant, index) => (
+    //     <div
+    //         key={index} // Use index as key since there's no unique ID
+    //         style={{
+    //             width: plant.width + "px",
+    //             height: plant.height + "px",
+    //             backgroundColor: plant.color,
+    //         }}
+    //         className="plant"
+    //     ></div>
+    // ));
 
     // //finds largest plant diameter and sets it as maxObj
     // let maxWidth = 0
@@ -193,11 +196,40 @@ function Zones() {
     //     gridTemplateRows:`repeat(${rowCount}, ${rowWidth}%)`,
     // }
 
+    const [selectedPlant, setSelectedPlant] = useState('')
+    const [quantity, setQuantity] = useState('')
+    const [unsortedPlants, setUnsortedPlants] = useState([])
+
+    //sets which new plant is to be added
+    const handleVegChange = (e) => {
+        const selectedValue = e.target.value
+        const selectedObj = allPlants.find(item => item.name === selectedValue)
+        setSelectedPlant(selectedObj)
+    }
+
+    //sets quantity of new plants to be added
+    const handleQuantityChange = (e) => {
+        setQuantity(e.target.value)
+    }
+
+    //adds new plants (with quantity) to unsorted plant list
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (selectedPlant && quantity) {
+            for (let i = 0; i < quantity; i++){
+                unsortedPlants.push(selectedPlant)
+            }
+            setQuantity('')
+        }
+    }
+
+    console.log(unsortedPlants)
+
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" /*style={plantBedColumns}*/ ref={divRef}>
-                    {renderPlants}
+                    {/* {renderPlants} */}
                     <div className='section' id='1' style={{backgroundColor:'blue', ...sectionStyle}}></div>
                     <div className='section' id='2' style={{backgroundColor:'red', ...sectionStyle}}></div>
                     <div className='section' id='3' style={{backgroundColor:'yellow', ...sectionStyle}}></div>
@@ -212,16 +244,46 @@ function Zones() {
                     <p>No more space to plant!</p>
                 </div>
             )}
+
             <div>
-                <select value={selectedPlant.name} onChange={handleOptionChange}>
+                <form onSubmit = {handleSubmit}>
+                    <label>
+                        Select Your Vegetable:
+                        <select value={selectedPlant.name} onChange={handleVegChange}>
+                            <option value=''>Select...</option>
+                            {allPlants.map(item => (
+                                <option key={item.id} value={item.name}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Quantity:
+                        <input type='number' value={quantity} onChange={handleQuantityChange} />
+                    </label>
+                    <button type='submit'>Add</button>
+                </form>
+                {/* <ul>
+                    {vegetableList.map((item, index) => (
+                        <li key={index}>
+                            {item.quantity}
+                            {item.vegetable}
+                        </li>
+                    ))}
+                </ul> */}
+            </div>
+
+            <div>
+                {/* <select value={selectedPlant.name} onChange={handleOptionChange}>
                     <option value=''>Select...</option>
                     {allPlants.map(item => (
                         <option key={item.id} value={item.name}>
                             {item.name}
                         </option>
                     ))}
-                </select>
-                <button onClick={addPlant}>Add</button>
+                </select> */}
+                {/* <button onClick={addPlant}>Add</button> */}
             </div>
         </div>
     );
