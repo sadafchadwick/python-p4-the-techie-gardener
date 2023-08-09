@@ -3,6 +3,14 @@ import "../styling/zone.css"
 import React, { useRef, useEffect, useState } from "react"
 
 function Zones() {
+    const [allPlants, setAllPlants] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:5555/plants')
+        .then(r => r.json())
+        .then(plants => setAllPlants(plants))
+    }, [])
+
     //window size state
     const [windowSize, setWindowSize] = useState({
         height: window.innerHeight,
@@ -51,42 +59,31 @@ function Zones() {
 
     //planter info
     const [planterCount, setPlanterCount] = useState([])
-    
-    //adds carrot to planter
-    const addCarrot = () => {
-        
+
+    //chooses selected plant from dropdown menu and sets selectedPlant to obj on dropdown
+    const [selectedPlant, setSelectedPlant] = useState('')
+    const handleOptionChange = (e) => {
+        const selectedValue = e.target.value
+        const selectedObj = allPlants.find(item => item.name === selectedValue)
+        setSelectedPlant(selectedObj)
+    }
+
+    //adds plants to planterCount
+    const addPlant = () => {
         if (planterCount.length > maxPlants) {
             // Show an error message if there's no more space
             console.log("No more space to plant!");
             return;
         }
-
-        const carrot = {
-            name: "carrot",
-            color: "orange",
-            width: `${3 * inch}`,
-            height: `${3 * inch}`,
-        };
-        setPlanterCount([...planterCount, carrot]);
-    };
-
-    //adds potatoes to planter
-    const addPotato = () => {
-        
-        if (planterCount.length > maxPlants) {
-            // Show an error message if there's no more space
-            console.log("No more space to plant!");
-            return;
+        const plant ={
+            name: selectedPlant.name,
+            width: selectedPlant.diameter * inch,
+            height: selectedPlant.diameter * inch,
+            color: selectedPlant.color
         }
-
-        const potato = {
-            name: "potato",
-            color: "brown",
-            width: `${10 * inch}`,
-            height: `${10 * inch}`,
-        };
-        setPlanterCount([...planterCount, potato]);
-    };
+        console.log(plant)
+        setPlanterCount([...planterCount, plant]);
+    }
 
     //sorts the planerCount by type of plant (can sort by other attributes if you change name, ie temp range)
     const sortedPlants = planterCount.slice().sort((a, b) => a.name.localeCompare(b.name))
@@ -108,13 +105,20 @@ function Zones() {
         ></div>
     ));
 
-    console.log(alignedPlants)
+    const quadrantStyle = {
+        width:`${plantbedDim.width / 2}px`,
+        height:`${plantbedDim.height / 2}px`,
+    }
 
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" ref={divRef}>
                     {renderPlants}
+                    <div className="quadrant" id='1' style={{backgroundColor:'blue', ...quadrantStyle}}>1</div>
+                    <div className="quadrant" id='2' style={{backgroundColor:'red', ...quadrantStyle}}>2</div>
+                    <div className="quadrant" id='3' style={{backgroundColor:'green', ...quadrantStyle}}>3</div>
+                    <div className="quadrant" id='4' style={{backgroundColor:'yellow', ...quadrantStyle}}>4</div>
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
@@ -123,8 +127,15 @@ function Zones() {
                 </div>
             )}
             <div>
-                <button onClick={addCarrot}>Add Carrot</button>
-                <button onClick={addPotato}>Add Potato</button>
+                <select value={selectedPlant.name} onChange={handleOptionChange}>
+                    <option value=''>Select...</option>
+                    {allPlants.map(item => (
+                        <option key={item.id} value={item.value}>
+                            {item.name}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={addPlant}>Add</button>
             </div>
         </div>
     );

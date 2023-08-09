@@ -48,8 +48,9 @@ p1 = Plant(
     moisture_range = 2,
     sunlight_range = 1,
     symbiotic_relations = 0,
-    growth_time = 65
+    growth_time = 65,
     #average in days
+    color = '#d98621'
 )
 plants.append(p1)
 
@@ -62,7 +63,8 @@ p2 = Plant(
     moisture_range = 2,
     sunlight_range = 1,
     symbiotic_relations = 0,
-    growth_time = 90
+    growth_time = 90,
+    color = '#91582c'
 )
 plants.append(p2)
 
@@ -75,7 +77,8 @@ p3 = Plant(
     moisture_range = 2,
     sunlight_range = 1,
     symbiotic_relations = 0,
-    growth_time = 80
+    growth_time = 80,
+    color = '#b53721'
 )
 plants.append(p3)
 
@@ -88,7 +91,8 @@ p4 = Plant(
     moisture_range = 2,
     sunlight_range = 2,
     symbiotic_relations = 0,
-    growth_time = 50
+    growth_time = 50,
+    color = '#69a333'
 )
 plants.append(p4)
 
@@ -101,7 +105,8 @@ p5 = Plant(
     moisture_range = 2,
     sunlight_range = 1,
     symbiotic_relations = 0,
-    growth_time = 60
+    growth_time = 60,
+    color = '#377812'
 )
 plants.append(p5)
 
@@ -114,7 +119,8 @@ p6 = Plant(
     moisture_range = 2,
     sunlight_range = 1,
     symbiotic_relations = 0,
-    growth_time = 125
+    growth_time = 125,
+    color = '#ebdb96'
 )
 plants.append(p6)
 

@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
 import os
+from flask_cors import CORS
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
@@ -18,6 +19,7 @@ migrate = Migrate(app, db)
 db.init_app(app)
 api=Api(app)
 
+CORS(app)
 
 # Views go here!
 
