@@ -7,12 +7,15 @@ function Greenhouses() {
     fetch("/greenhouses")
       .then((response) => response.json())
       .then((data) => {
-        setGreenhouses(data.greenhouses);
+        // console.log(data)
+        setGreenhouses(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  // console.log(greenhouses)
 
   return (
     <div>
