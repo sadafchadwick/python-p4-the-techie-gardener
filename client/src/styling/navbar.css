@@ -1,5 +1,6 @@
 /* buttons glow     <-- ("https://webdeasy.de/en/top-css-buttons-en/")  */
 .glow-on-hover {
+    display: "inline-block";
     width: 220px;
     height: 50px;
     border: none;
