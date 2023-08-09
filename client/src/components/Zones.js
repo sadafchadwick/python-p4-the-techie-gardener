@@ -4,40 +4,40 @@ import React, { useRef, useEffect, useState } from "react"
 
 function Zones() {
     //placeholder user info
-    const user = 
-        {
-            id: 1,
-            name: 'Nolan',
-            greenhouses: [
-                {
-                    id: 1,
-                    name: 'Backyard',
-                    zones: [
-                        {
-                            id: 1
-                        },
-                        {
-                            id: 2
-                        },
-                        {
-                            id: 3
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    name: 'Frontyard',
-                    zones: [
-                        {
-                            id: 1
-                        },
-                        {
-                            id: 2
-                        }
-                    ]
-                },
-            ]
-        }
+    // const user = 
+    //     {
+    //         id: 1,
+    //         name: 'Nolan',
+    //         greenhouses: [
+    //             {
+    //                 id: 1,
+    //                 name: 'Backyard',
+    //                 zones: [
+    //                     {
+    //                         id: 1
+    //                     },
+    //                     {
+    //                         id: 2
+    //                     },
+    //                     {
+    //                         id: 3
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 id: 2,
+    //                 name: 'Frontyard',
+    //                 zones: [
+    //                     {
+    //                         id: 1
+    //                     },
+    //                     {
+    //                         id: 2
+    //                     }
+    //                 ]
+    //             },
+    //         ]
+    //     }
     //console.log(user.greenhouses[0].zones[0].id[0])
 
     //fetches all plants in our db
@@ -109,36 +109,19 @@ function Zones() {
 
     //adds plants to planterCount
     const addPlant = () => {
-        if (planterCount.length > maxPlants) {
-            // Show an error message if there's no more space
+        const availableSpace = maxPlants - unsortedPlants.length;
+        
+        if (availableSpace <= 0) {
             console.log("No more space to plant!");
             return;
         }
-        const plant = {
-            name: selectedPlant.name,
-            width: selectedPlant.diameter * inch,
-            height: selectedPlant.diameter * inch,
-            color: selectedPlant.color,
-            temperature_range: selectedPlant.temperature_range,
-            moisture_range: selectedPlant.moisture_range,
-            sunlight_range: selectedPlant.sunlight_range,
-            growth_time: selectedPlant.growth_time
-        }
-        setPlanterCount([...planterCount, plant]);
-    }
 
-    // renders the plants on screen
-    // const renderPlants = alignedPlants.map((plant, index) => (
-    //     <div
-    //         key={index} // Use index as key since there's no unique ID
-    //         style={{
-    //             width: plant.width + "px",
-    //             height: plant.height + "px",
-    //             backgroundColor: plant.color,
-    //         }}
-    //         className="plant"
-    //     ></div>
-    // ));
+        const numPlantsToAdd = Math.min(quantity, availableSpace);
+        const newPlants = Array.from({ length: numPlantsToAdd }, () => selectedPlant);
+
+        setUnsortedPlants(prevPlants => [...prevPlants, ...newPlants]);
+        setQuantity('');
+    }
 
     const [selectedPlant, setSelectedPlant] = useState('')
     const [quantity, setQuantity] = useState('')
@@ -156,7 +139,7 @@ function Zones() {
         setQuantity(e.target.value)
     }
 
-    //adds new plants (with quantity) to unsorted plant list
+    // adds new plants (with quantity) to unsorted plant list
     const handleSubmit = (e) => {
         e.preventDefault()
         if (selectedPlant && quantity) {
@@ -167,22 +150,34 @@ function Zones() {
         }
     }
 
+    // renders the plants on screen
+    const renderPlants = unsortedPlants.map((plant, index) => (
+        <div
+            key={index} // Use index as key since there's no unique ID
+            style={{
+                width: plant.width + "px",
+                height: plant.height + "px",
+                backgroundColor: plant.color,
+            }}
+            className="plant"
+        ></div>
+    ));
     console.log(unsortedPlants)
 
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" style={plantBedGrid} ref={divRef}>
-                    {/* {renderPlants} */}
+                    {renderPlants}
                 </div>
             </div>
-            {planterCount.length >= maxPlants && (
+            {unsortedPlants.length >= maxPlants && (
                 <div>
                     <p>No more space to plant!</p>
                 </div>
             )}
             <div>
-                <form onSubmit = {handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <label>
                         Select Your Vegetable:
                         <select value={selectedPlant.name} onChange={handleVegChange}>
@@ -198,7 +193,12 @@ function Zones() {
                         Quantity:
                         <input type='number' value={quantity} onChange={handleQuantityChange} />
                     </label>
-                    <button type='submit'>Add</button>
+                    <button
+                        type='submit'
+                        disabled={!selectedPlant || !quantity || unsortedPlants.length >= maxPlants}
+                    >
+                        Add
+                    </button>
                 </form>
             </div>
         </div>
