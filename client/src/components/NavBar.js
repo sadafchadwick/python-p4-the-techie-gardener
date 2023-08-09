@@ -3,15 +3,14 @@ import { NavLink } from "react-router-dom"
 
 function NavBar() {
     return (
-    <nav>
+    <nav className="glow-on-hover">
         <NavLink to="/">HOME</NavLink>
         <NavLink to="/aboutus">ABOUT US</NavLink>
         <NavLink to="/greenhouses">YOUR GREENHOUSES</NavLink>
         <NavLink to="/zones">YOUR ZONES</NavLink>
         <NavLink to="/plants">YOUR PLANTS</NavLink>
-        <div className="glow-on-hover"></div>
-        <NavLink to="/addplants">PLANT NEW PLANTS</NavLink>
-
+        <NavLink to="/loginsignup">LOGIN/SIGNUP</NavLink>
+        {/* <div className="glow-on-hover"></div> */}
     </nav>
     )
 }
