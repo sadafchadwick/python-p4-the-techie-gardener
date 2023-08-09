@@ -1,3 +1,4 @@
+import "../styling/plants.css"
 import React, { useState, useEffect } from "react";
 
 function Plants() {
@@ -37,7 +38,9 @@ function Plants() {
             <p>Sunlight Range: {plant.sunlight_range}</p>
             <p>Symbiotic Relations: {plant.symbiotic_relations}</p>
             <p>Growth Time: {plant.growth_time}</p>
-            <p>Color: {plant.color}</p>
+            <p>
+            Color: <span className="color_example" style={{ backgroundColor: plant.color, display: "inline-block", width: "20px", height: "20px", verticalAlign: "middle", marginRight: "5px" }}></span>
+          </p>
           </li>
         ))}
       </ul>
