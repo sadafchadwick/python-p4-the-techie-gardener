@@ -109,20 +109,32 @@ function Zones() {
 
     //adds plants to planterCount
     const addPlant = () => {
-        const availableSpace = maxPlants - unsortedPlants.length;
-        
-        if (availableSpace <= 0) {
+        if (planterCount.length > maxPlants) {
+            // Show an error message if there's no more space
             console.log("No more space to plant!");
             return;
         }
+        
+        // const numPlantsToAdd = Math.min(quantity, availableSpace);
+        // const newPlants = Array.from({ length: numPlantsToAdd }, () => selectedPlant);
 
-        const numPlantsToAdd = Math.min(quantity, availableSpace);
-        const newPlants = Array.from({ length: numPlantsToAdd }, () => selectedPlant);
+        // setUnsortedPlants(prevPlants => [...prevPlants, ...newPlants]);
+        // setQuantity('');
+        // }
 
-        setUnsortedPlants(prevPlants => [...prevPlants, ...newPlants]);
-        setQuantity('');
+        const plant = {
+            name: selectedPlant.name,
+            width: selectedPlant.diameter * inch,
+            height: selectedPlant.diameter * inch,
+            color: selectedPlant.color,
+            temperature_range: selectedPlant.temperature_range,
+            moisture_range: selectedPlant.moisture_range,
+            sunlight_range: selectedPlant.sunlight_range,
+            growth_time: selectedPlant.growth_time
+        }
+        setPlanterCount([...planterCount, plant]);
     }
-
+    
     const [selectedPlant, setSelectedPlant] = useState('')
     const [quantity, setQuantity] = useState('')
     const [unsortedPlants, setUnsortedPlants] = useState([])
@@ -163,6 +175,28 @@ function Zones() {
         ></div>
     ));
     console.log(unsortedPlants)
+
+    //renders the plants on screen
+    const renderPlants = unsortedPlants.map((plant, index) => {
+        const plantSize = plant.diameter * inch;
+        return (
+            <div className={plantSize > foot ? "large_plant" : "small_plant"}>
+                <div
+                    key={index}
+                    style={{
+                        backgroundColor: plant.color,
+                        width: plantSize,
+                        height: plantSize,
+                    }}
+                    className="plant"
+                ></div>
+            </div>
+            
+        );
+    });
+    
+
+    console.log(unsortedPlants[0])
 
     return (
         <div>

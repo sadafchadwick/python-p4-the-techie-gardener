@@ -12,22 +12,39 @@
     width: 700px;
     height: 400px;
     background-color: burlywood;
-    display: flex;
+    display: grid;
+    border: 1px solid #ffffff;
 }
 
 .plant {
     border-radius: 50%;
-    /* grid-row-end: 5; */
+    align-self: center;
+    justify-self: center;
+    border: 1px solid #ffffff;
 }
 
-.plantbed {
-    width: 700px;
-    height: 400px;
-    background-color: burlywood;
-    display: grid;
-    /* grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 20% 20% 20% 20% 20%; */
+.plant_large {
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
+    grid-row: span 2;
+    grid-column: span 2;
+    border: 1px solid #ffffff;
+    object-fit: cover;
 }
+
+.small_plant {
+    align-self: center;
+    justify-self: center;
+}
+
+.large_plant {
+    grid-row: span 2;
+    grid-column: span 2;
+    align-self: center;
+    justify-self: center;
+}
+
 
 /* .plantbed {
     width: 700px;
