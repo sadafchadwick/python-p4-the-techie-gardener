@@ -1,10 +1,20 @@
-from config import db
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(constraint_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
 
-class Greenhouse(db.Model):
+db = SQLAlchemy(metadata=metadata)
+
+
+class Greenhouse(db.Model,SerializerMixin):
     __tablename__='greenhouses'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -16,7 +26,7 @@ class Greenhouse(db.Model):
     plants = association_proxy('greenhouse', 'plants')
 
 
-class Plant(db.Model):
+class Plant(db.Model,SerializerMixin):
     __tablename__= 'plants'
 
     id=db.Column(db.Integer, primary_key=True)
@@ -36,7 +46,7 @@ class Plant(db.Model):
     zone= association_proxy('plants', 'zones')
 
 
-class Zone(db.Model):
+class Zone(db.Model,SerializerMixin):
     __tablename__= 'zones'
 
     id=db.Column(db.Integer, primary_key=True)
