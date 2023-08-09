@@ -1,0 +1,23 @@
+:root {
+  --bg: #282c34;
+  --header: #fff;
+  --link: #61dafb;
+  --text: hsla(0, 0%, 100%, 0.88);
+}
+
+body {
+  text-align: center;
+  background-image: url('https://image.slidesdocs.com/responsive-images/background/beige-nature-creative-green-plant-exquisite-powerpoint-background_304532f239__960_540.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#title {
+  text-align: center;
+  margin: 50px 0;
+  font-family: 'Pacifico', cursive;
+  font-size: 3rem;
+  color: #4CAF50;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
