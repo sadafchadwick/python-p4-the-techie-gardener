@@ -127,19 +127,6 @@ function Zones() {
         setPlanterCount([...planterCount, plant]);
     }
 
-    // renders the plants on screen
-    // const renderPlants = alignedPlants.map((plant, index) => (
-    //     <div
-    //         key={index} // Use index as key since there's no unique ID
-    //         style={{
-    //             width: plant.width + "px",
-    //             height: plant.height + "px",
-    //             backgroundColor: plant.color,
-    //         }}
-    //         className="plant"
-    //     ></div>
-    // ));
-
     const [selectedPlant, setSelectedPlant] = useState('')
     const [quantity, setQuantity] = useState('')
     const [unsortedPlants, setUnsortedPlants] = useState([])
@@ -169,11 +156,33 @@ function Zones() {
 
     console.log(unsortedPlants)
 
+    //renders the plants on screen
+    const renderPlants = unsortedPlants.map((plant, index) => {
+        const plantSize = plant.diameter * inch;
+        return (
+            <div className={plantSize > foot ? "large_plant" : "small_plant"}>
+                <div
+                    key={index}
+                    style={{
+                        backgroundColor: plant.color,
+                        width: plantSize,
+                        height: plantSize,
+                    }}
+                    className="plant"
+                ></div>
+            </div>
+            
+        );
+    });
+    
+
+    console.log(unsortedPlants[0])
+
     return (
         <div>
             <div className="plantbed_container">
                 <div className="plantbed" style={plantBedGrid} ref={divRef}>
-                    {/* {renderPlants} */}
+                    {renderPlants}
                 </div>
             </div>
             {planterCount.length >= maxPlants && (
