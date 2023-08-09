@@ -5,8 +5,8 @@ from flask_restful import Api, Resource
 import os
 from flask_cors import CORS
 from werkzeug.exceptions import NotFound
-from config import app, api, db
-from flask_bcrypt import Bcrypt
+from config import app, api, db, bcrypt
+
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
@@ -21,7 +21,7 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 api=Api(app)
-bcrypt = Bcrypt( app )
+# bcrypt = Bcrypt( app )
 
 CORS(app)
 
