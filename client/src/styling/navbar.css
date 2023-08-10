@@ -1,4 +1,17 @@
 /* buttons glow     <-- ("https://webdeasy.de/en/top-css-buttons-en/")  */
+
+.nav-button {
+    align-content: center;
+    margin: 10px;
+    padding: 10px;
+    list-style: none;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .glow-on-hover {
     display: "inline-block";
     width: 220px;
@@ -6,16 +19,16 @@
     border: none;
     outline: none;
     color: #fff;
-    background: #111111;
-    cursor: pointer;
-    position: relative;
+    background: #ffffff;
+    position: fixed;
     z-index: 0;
     border-radius: 10px;
+    text-align: center;
 }
 
 .glow-on-hover:before {
     content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    background: linear-gradient(45deg, #66d63d, #20d35f, #00ff1e, #48ff00, #44e075, #25d159, #4dd45d, #36ea5d, #3caf28);
     position: absolute;
     top: -2px;
     left: -2px;
@@ -44,14 +57,22 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: #cbfdbb;
     left: 0;
     top: 0;
     border-radius: 10px;
 }
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }

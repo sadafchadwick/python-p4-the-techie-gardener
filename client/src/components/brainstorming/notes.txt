@@ -82,3 +82,122 @@
                 </select> */}
                 {/* <button onClick={addPlant}>Add</button> */}
             </div>
+
+
+                //adds plants to planterCount
+    // const addPlant = () => {
+    //     if (planterCount.length > maxPlants) {
+    //         // Show an error message if there's no more space
+    //         console.log("No more space to plant!");
+    //         return;
+    //     }
+        
+    //     // const numPlantsToAdd = Math.min(quantity, availableSpace);
+    //     // const newPlants = Array.from({ length: numPlantsToAdd }, () => selectedPlant);
+
+    //     // setUnsortedPlants(prevPlants => [...prevPlants, ...newPlants]);
+    //     // setQuantity('');
+    //     // }
+
+    //     const plant = {
+    //         name: selectedPlant.name,
+    //         width: selectedPlant.diameter * inch,
+    //         height: selectedPlant.diameter * inch,
+    //         color: selectedPlant.color,
+    //         temperature_range: selectedPlant.temperature_range,
+    //         moisture_range: selectedPlant.moisture_range,
+    //         sunlight_range: selectedPlant.sunlight_range,
+    //         growth_time: selectedPlant.growth_time
+    //     }
+    //     setPlanterCount([...planterCount, plant]);
+    // }
+
+
+    //determines plant container size and renders plants on screen
+    //with the amount of small plants it can fit (ie - 4 carrots)
+    const renderPlants = unsortedPlants.map((plant, index) => {
+        const plantSize = plant.diameter * inch;
+        if (plantSize > foot) {
+            return (
+                <div className="large_plant" key={index}>
+                    <div
+                        style={{
+                            backgroundColor: plant.color,
+                            width: plantSize + 'px',
+                            height: plantSize + 'px',
+                        }}
+                        className="plant"
+                    ></div>
+                </div>
+            );
+        } else {
+            const amount = Math.floor(foot / plantSize);
+            const setOfDivs = [];
+            for (let i = 0; i < amount; i++) {
+                setOfDivs.push(
+                    <div
+                        key={index + i}
+                        style={{
+                            backgroundColor: plant.color,
+                            width: plantSize + 'px',
+                            height: plantSize + 'px',
+                        }}
+                        className="plant"
+                    ></div>
+                );
+            }
+            return (
+                <div className="small_plant" key={index}>
+                    {setOfDivs}
+                </div>
+            );
+        }
+    });
+
+    
+  //determines plant container size and renders plants on screen
+    // const renderPlants = unsortedPlants.map((plant, index) => {
+    //     const plantSize = plant.diameter * inch;
+    //     if (plantSize > foot) {
+    //         return (
+    //             <div className="large_plant" key={index}>
+    //                 <div
+    //                     style={{
+    //                         backgroundColor: plant.color,
+    //                         width: plantSize + 'px',
+    //                         height: plantSize + 'px',
+    //                     }}
+    //                     className="plant"
+    //                 ></div>
+    //             </div>
+    //         );
+    //     }
+    //     if (foot / plantSize >= 2) {
+    //         const amount = Math.floor(foot / plantSize);
+    //         return (
+    //             <div className="micro_plant" key={index}>
+    //                 <div
+    //                     style={{
+    //                         backgroundColor: plant.color,
+    //                         width: plantSize + 'px',
+    //                         height: plantSize + 'px',
+    //                     }}
+    //                     className="plant"
+    //                 ></div>
+    //             </div>
+    //         )
+    //     } else {
+    //         return (
+    //             <div className="small_plant" key={index}>
+    //                 <div
+    //                     style={{
+    //                         backgroundColor: plant.color,
+    //                         width: plantSize + 'px',
+    //                         height: plantSize + 'px',
+    //                     }}
+    //                     className="plant"
+    //                 ></div>
+    //             </div>
+    //         )
+    //     }
+    // });
