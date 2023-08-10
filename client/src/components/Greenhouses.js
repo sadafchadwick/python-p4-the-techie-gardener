@@ -6,7 +6,7 @@ function Greenhouses() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/greenhouses")
+    fetch("http://127.0.0.1:5555/greenhouses")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

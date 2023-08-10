@@ -5,7 +5,7 @@ function Plants() {
   const [plants, setPlants] = useState([]);
 
   useEffect(() => {
-    fetch("/plants")
+    fetch("http://127.0.0.1:5555/plants")
       .then((response) => response.json())
       .then((data) => {
         setPlants(data);
