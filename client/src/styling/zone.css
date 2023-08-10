@@ -1,36 +1,50 @@
+.page_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: chartreuse; */
+}
+
 .zone_container {
     align-items: center;
     justify-content: center;
+    align-self: center;
     flex: 1;
     display: flex;
+    max-width: 1000px;
+    width: 100%;
+    /* background-color: aqua; */
+    margin-bottom: -60px;
 }
 
 .plantbed_container {
     width: 100%;
-    /* max-width: 1000px; */
+    max-width: 1000px;
     height: 100%;
     /* max-height: 500px; */
     display: flex;
     justify-content: center;
     padding-top: 50px;
     padding-bottom: 50px;
-    /* background-color: rgba(0, 0, 0, 0.198); */
+    /* background-color: black; */
 }
 
 .plantbed {
-    width: 700px;
-    height: 400px;
+    max-width: 700px;
+    /* width: 700px; */
+    width: 80%;
+    /* height: 100%; */
+    height: 400px; /* get this number from zone dimensions*/
     background-color: burlywood;
     display: grid;
-    /* border: 1px solid #ffffff; */
     grid-auto-flow: dense;
+    border: 2px solid white;
 }
 
 .plant {
     border-radius: 50%;
     align-self: center;
     justify-self: center;
-    /* border: 1px solid #ffffff; */
 }
 
 .small_plant {
@@ -58,22 +72,79 @@
 }
 
 .plant_info_container {
-    padding-left: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     display: inline-block;
+    display: flex;
     align-self: center;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+    width: 100%;
+    height: 400px; /* match this info from zone dimensions*/
+    border: 2px solid white;
+    border-left: none;
+    border-radius: 0 20px 20px 0;
+    background-color: #9dd685;
+}
+
+h4 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12pt;
+    color: #16330a;
+}
+
+.plant_title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+h5 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 10pt;
+    color: white;
+}
+
+h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 8pt;
+    color: #16330a;
+}
+
+.plantbed_info {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.yield span {
+    font-weight: 700;
 }
 
 .plant_info {
     display: flex;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    align-items: center;
+    /* padding-top: 0px;
+    padding-bottom: 0px; */
+    margin-top: -20px;
+    margin-bottom: -20px;
+    /* background-color: blue; */
 }
 
 .color_swatch {
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
-    margin-right: 10px
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .submit_footer {
