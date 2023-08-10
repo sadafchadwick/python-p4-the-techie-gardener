@@ -96,9 +96,9 @@ function Zones() {
     const inch = foot / 12
 
     //sets up size of grid
-    let columnCount = Math.floor(plantbedDim.width / foot)
+    let columnCount = Math.floor(plantbedDim.width / inch)
     let columnWidth = 100 / columnCount
-    let rowCount = Math.floor(plantbedDim.height / foot)
+    let rowCount = Math.floor(plantbedDim.height / inch)
     let rowWidth = 100 / rowCount
     const plantBedGrid = {
         gridTemplateColumns: `repeat(${columnCount}, ${columnWidth}%)`,
@@ -111,7 +111,7 @@ function Zones() {
     );
 
     //sets which new plant is to be added
-    const handleVegChange = (e) => {
+    const handlePlantChange = (e) => {
         const selectedValue = e.target.value
         const selectedObj = allPlants.find(item => item.name === selectedValue)
         setSelectedPlant(selectedObj)
@@ -133,24 +133,42 @@ function Zones() {
         }
     }
 
-    //renders the plants on screen
+    const deletePlantClick = (index) => {
+        const updatedPlants = [...unsortedPlants]
+        updatedPlants.splice(index, 1)
+        setUnsortedPlants(updatedPlants)
+    }
+
+    const handlePlantDoubleClick = (index) => {
+        deletePlantClick(index)
+    }
+
+    const moreInfoClick = (index) => {
+        console.log(unsortedPlants[index])
+    }
+
+    console.log(unsortedPlants)
+
+    //renders plants and sets the span by the plant diameter
     const renderPlants = unsortedPlants.map((plant, index) => {
-        const plantSize = plant.diameter * inch;
+        const plantSize = plant.diameter * inch
+        const multiplesOfFour = Math.ceil(plant.diameter / 4) * 4
         return (
-            <div className={plantSize > foot ? "large_plant" : "small_plant"}>
+            <div className="plant_container" style={{gridRow:`span ${multiplesOfFour}`, gridColumn:`span ${multiplesOfFour}`}}key={index}>
                 <div
-                    key={index}
+                    id={unsortedPlants.index}
                     style={{
                         backgroundColor: plant.color,
-                        width: plantSize,
-                        height: plantSize,
+                        width: plantSize + 'px',
+                        height: plantSize + 'px',
                     }}
                     className="plant"
+                    onClick={() => moreInfoClick(index)}
+                    onDoubleClick={() => handlePlantDoubleClick(index)}
                 ></div>
             </div>
-            
-        );
-    });
+        )
+    })
 
     return (
         <div>
@@ -168,7 +186,7 @@ function Zones() {
                 <form onSubmit = {handleSubmit}>
                     <label>
                         Select Your Vegetable:
-                        <select value={selectedPlant.name} onChange={handleVegChange}>
+                        <select value={selectedPlant.name} onChange={handlePlantChange}>
                             <option value=''>Select...</option>
                             {allPlants.map(item => (
                                 <option key={item.id} value={item.name}>
