@@ -22,12 +22,12 @@ function App() {
   };
 
   return (
-    <div>
-      <h1 id="title">THE TECHIE GARDENER</h1>
+    <div className="background">
+      <h1 id="title"><span>the </span>Techie Gardener</h1>
       <NavBar loggedIn={loggedIn} onLogout={handleLogout} />
-
+    
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/home">
           <Home />
         </Route>
 

@@ -4,40 +4,47 @@ import React, { useRef, useEffect, useState } from "react"
 
 function Zones() {
     //placeholder user info
-    const user = 
-        {
-            id: 1,
-            name: 'Nolan',
-            greenhouses: [
-                {
-                    id: 1,
-                    name: 'Backyard',
-                    zones: [
-                        {
-                            id: 1
-                        },
-                        {
-                            id: 2
-                        },
-                        {
-                            id: 3
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    name: 'Frontyard',
-                    zones: [
-                        {
-                            id: 1
-                        },
-                        {
-                            id: 2
-                        }
-                    ]
-                },
-            ]
-        }
+    // const user = 
+    //     {
+    //         id: 1,
+    //         name: 'Nolan',
+    //         greenhouses: [
+    //             {
+    //                 id: 1,
+    //                 name: 'Backyard',
+    //                 zones: [
+    //                     {
+    //                         id: 1,
+    //                         plantlist:
+    //                     },
+    //                     {
+    //                         id: 2,
+    //                         plantlist: 
+    //                     },
+    //                     {
+    //                         id: 3,
+    //                         plantlist:
+    //                     }
+    //                 ],
+    //                 city: 1,
+    //             },
+    //             {
+    //                 id: 2,
+    //                 name: 'Frontyard',
+    //                 zones: [
+    //                     {
+    //                         id: 1,
+    //                         plantlist:
+    //                     },
+    //                     {
+    //                         id: 2,
+    //                         plantlist:
+    //                     }
+    //                 ],
+    //                 city: 2,
+    //             },
+    //         ]
+    //     }
     //console.log(user.greenhouses[0].zones[0].id[0])
     
     //planter info
@@ -240,25 +247,33 @@ function Zones() {
     //maps through unsortedplants for info at bottom
     const plantInfo = Object.keys(nameCounts).map((name) => {
         const filteredPlant = unsortedPlants.filter(obj => obj.name === name)
-        console.log(filteredPlant[0])
         return (
             <div key={name} className="plant_info">
-                <div className="color_swatch" style={{backgroundColor: filteredPlant[0].color}}></div>
-                {name} X {nameCounts[name]} (Expected Yield : {nameCounts[name] * filteredPlant[0].expected_yield} Total)
+                <div className="color_swatch" style={{backgroundColor: filteredPlant[0].color}}><h5 className="number_in_circle">x{nameCounts[name]}</h5></div>
+                <h4 className="plant_title">{name.toLowerCase()}</h4><h5 className="yield">(Expected Yield : <span>{nameCounts[name] * filteredPlant[0].expected_yield} Total</span>)</h5>
             </div>
         )
     })
+    console.log(unsortedPlants)
 
     return (
-        <div className="page_container">
-            <div className="zone_container">
-                <div className="plantbed_container">
-                    <div className="plantbed" style={plantBedGrid} ref={divRef}>
-                        {renderPlants}
+        <div className="body_page">
+            <div className="page_container">
+                <div className="zone_container">
+                    <div className="plantbed_container">
+                        <div className="plantbed" style={plantBedGrid} ref={divRef}>
+                            {renderPlants}
+                        </div>
+                        <div className="plant_info_container">
+                            <div className="plant_info_box">
+                                {plantInfo}
+                            </div>
+                        </div>
                     </div>
-                    <div className="plant_info_container">
-                        {plantInfo}
-                    </div>
+                </div>
+                <div className="plantbed_info">
+                    <h2>Zone 2</h2>
+                    <h6 className="expected_disclaimer">Expected Yield is the Amount of Plants Expected to Harvest From These Seeds*</h6>
                 </div>
             </div>
             <div className="submit_footer">
