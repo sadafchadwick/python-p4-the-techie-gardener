@@ -17,17 +17,17 @@ const linkStyles = {
 };
 
 
-const linkStyles ={ 
-        display: "inline-block",
-        width: "200px",
-        height: "25px",
-        border: "none",
-        outline: "none",
-        color: "red",
-        background: "white",
-        cursor: "pointer",
-        position: "relative",
-    };
+// const linkStyles ={ 
+//         display: "inline-block",
+//         width: "200px",
+//         height: "25px",
+//         border: "none",
+//         outline: "none",
+//         color: "red",
+//         background: "white",
+//         cursor: "pointer",
+//         position: "relative",
+//     };
 
 function NavBar() {
     return (

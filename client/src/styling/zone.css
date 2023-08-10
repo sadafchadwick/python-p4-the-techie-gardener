@@ -13,24 +13,15 @@
     height: 400px;
     background-color: burlywood;
     display: grid;
-    border: 1px solid #ffffff;
+    /* border: 1px solid #ffffff; */
+    grid-auto-flow: dense;
 }
 
 .plant {
     border-radius: 50%;
     align-self: center;
     justify-self: center;
-    border: 1px solid #ffffff;
-}
-
-.plant_large {
-    border-radius: 50%;
-    align-self: center;
-    justify-self: center;
-    grid-row: span 2;
-    grid-column: span 2;
-    border: 1px solid #ffffff;
-    object-fit: cover;
+    /* border: 1px solid #ffffff; */
 }
 
 .small_plant {
@@ -38,9 +29,21 @@
     justify-self: center;
 }
 
+.micro_plant {
+    grid-row: span .5;
+    grid-column: span .5;
+    align-self: center;
+    justify-self: center;
+}
+
 .large_plant {
     grid-row: span 2;
     grid-column: span 2;
+    align-self: center;
+    justify-self: center;
+}
+
+.plant_container {
     align-self: center;
     justify-self: center;
 }
