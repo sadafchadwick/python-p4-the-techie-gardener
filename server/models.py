@@ -22,7 +22,7 @@ class Greenhouse(db.Model, SerializerMixin):
     name = db.Column(db.String)
     air_temp = db.Column(db.Integer)
     humidity = db.Column(db.Integer)
-    
+
 
     # relationships
     zones = db.relationship('Zone', back_populates ='greenhouse')
@@ -48,7 +48,7 @@ class Zone(db.Model, SerializerMixin):
     plants=association_proxy('zone', 'plants')
 
 
-class PlantList(db.Model, SerializerMixin):
+class PlantBed(db.Model, SerializerMixin):
     __tablename__ = 'plant_beds'
 
     id=db.Column(db.Integer, primary_key=True)
