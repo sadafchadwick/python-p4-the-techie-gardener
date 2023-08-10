@@ -1,35 +1,55 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Greenhouses from "./Greenhouses"; // Import your components
+import React, { useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Greenhouses from "./Greenhouses";
 import Zones from "./Zones";
 import Plants from "./Plants";
 import NavBar from "./NavBar";
 import Home from "./Home";
-import '../styling/index.css';
+import Login from "./Login"; // Import your Login component
+import "../styling/index.css";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState();
+
+  const handleLogin = () => {
+    // Simulate a successful login
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Simulate a logout
+    setLoggedIn(false);
+  };
+
   return (
     <div className="background">
       <h1 id="title"><span>the </span>Techie Gardener</h1>
-      <NavBar />
-      
+      <NavBar loggedIn={loggedIn} onLogout={handleLogout} />
+    
       <Switch>
         <Route exact path="/home">
           <Home />
         </Route>
 
         <Route path="/greenhouses">
-          <Greenhouses />
+          {loggedIn ? <Greenhouses /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/zones">
-          <Zones />
+          {loggedIn ? <Zones /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/plants">
-          <Plants />
+          {loggedIn ? <Plants /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/login">
+          {loggedIn ? (
+            <Redirect to="/" />
+          ) : (
+            <Login onLogin={handleLogin} />
+          )}
+        </Route>
       </Switch>
     </div>
   );
