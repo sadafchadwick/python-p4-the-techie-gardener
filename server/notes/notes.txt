@@ -1,0 +1,96 @@
+1. User Class:
+
+This class represents users.
+Relationship:
+Many-to-One (One User can belong to One Greenhouse)
+Attributes:
+greenhouse_id is a foreign key that references the id column of the greenhouses table.
+
+2. Greenhouse Class:
+
+This class represents greenhouses.
+Relationships:
+One-to-Many (One Greenhouse can have Many Zones)
+One-to-Many (One Greenhouse can have Many Plants)
+Attributes:
+zones and plants are relationships that define the connection to the respective tables.
+
+3. Zone Class:
+
+This class represents zones within a greenhouse.
+Relationships:
+Many-to-One (One Zone belongs to One Greenhouse)
+One-to-Many (One Zone can have Many Plant Beds)
+One-to-Many (One Zone can have Many Plants)
+Attributes:
+greenhouse_id is a foreign key referencing the id column of the greenhouses table.
+plant_id is a foreign key referencing the id column of the plants table.
+
+4. PlantList (PlantBed) Class:
+
+This class represents plant beds within a zone.
+Relationships:
+Many-to-One (One Plant Bed belongs to One Zone)
+One-to-Many (One Plant Bed can have Many Plants)
+Attributes:
+zone_id is a foreign key referencing the id column of the zones table.
+plant_id is a foreign key referencing the id column of the plants table.
+
+5. Plant Class:
+
+This class represents plants.
+Relationships:
+Many-to-One (One Plant belongs to One Greenhouse through Plant Beds)
+Many-to-One (One Plant belongs to One Zone through Plant Beds)
+One-to-Many (One Plant can be in Many Plant Beds)
+Attributes:
+plant_bed is a relationship that defines the connection to the PlantBed table.
+greenhouse and zones are association proxies that provide an indirect connection to the respective tables through PlantBed.
+
+In summary:
+
+Users are associated with Greenhouses.
+Greenhouses can have Zones and Plants.
+Zones are associated with Greenhouses, Plant Beds, and Plants.
+Plant Beds are associated with Zones and Plants.
+Plants are associated with Greenhouses, Zones, and Plant Beds.
+
+app.py User Class
+# class Users( Resource ):
+#     def post( self ):
+#         data = request.json
+#         the_username = data['name']
+#         text_password = data['password']
+
+#         new_user = User( name = the_username, password_hash = text_password )
+
+#         db.session.add( new_user )
+#         db.session.commit()
+
+#         return make_response( new_user.to_dict(), 201 )
+
+# api.add_resource( Users, '/users' )
+
+
+# @app.route( '/login', methods = [ 'POST' ] )
+# def login():
+
+    # data = request.json
+    # username = data['name']
+    # password = data['password']
+
+    # # is the username one that we have in the database already
+    # user = User.query.filter_by( name = username ).first()
+    # if not user:
+    #     return make_response( { 'error': 'user not found' }, 404 )
+
+    # if not user.authenticate( password ):
+    #     return make_response( { 'error': 'wrong password' }, 401 )
+
+    # # we can put a cookie in the browser!
+    # session['user_id'] = user.id
+    # return make_response( user.to_dict() )
+
+# @app.errorhandler( NotFound )
+# def not_found( e ):
+#     return { 'error': 'look elsewhere for thy backend route! ' + str( e ) }
