@@ -1,0 +1,28 @@
+.title {
+    padding-top: 50px;
+    text-align: center;
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    line-height: 2;
+    width: 700px;
+    text-align: center;
+}
+
+.container {
+    width: 700px;
+    text-align: center;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

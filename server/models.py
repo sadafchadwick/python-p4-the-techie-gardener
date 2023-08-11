@@ -22,7 +22,7 @@ class Zone(db.Model, SerializerMixin):
     __tablename__ = 'zones'
 
     id = db.Column(db.Integer, primary_key=True)
-    plant_list = db.Column(db.JSON)  # Store list of dictionaries as JSON
+    plant_list = db.Column(db.String)  # Store list of dictionaries as JSON
 
     greenhouse_id = db.Column(db.Integer, db.ForeignKey('greenhouses.id'))
     plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'))
@@ -47,5 +47,6 @@ class Plant(db.Model, SerializerMixin):
     symbiotic_relations = db.Column(db.String)
     growth_time = db.Column(db.Integer)
     color = db.Column(db.String)
+   
 
     zone = db.relationship('Zone', back_populates='plants')

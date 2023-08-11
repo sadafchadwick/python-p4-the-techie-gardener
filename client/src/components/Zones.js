@@ -85,13 +85,16 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
         height: 0
     })
 
-    //fetches all plants in our db
-    const [allPlants, setAllPlants] = useState([])
+  // fetches all plants in our db
+    const [allPlants, setAllPlants] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5555/plants')
-        .then(r => r.json())
-        .then(plants => setAllPlants(plants))
-    }, [])
+        fetch("http://localhost:5555/plants")
+        .then((response) => response.json())
+        .then((plants) => setAllPlants(plants))
+        .catch((error) => {
+            console.error("Error fetching plants:", error);
+        });
+    }, []);
 
     //listens for changes to window size
     useEffect(() => {
@@ -333,6 +336,7 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
     const handleEdit = (e) => {
         setIsEditing(!isEditing)
     }
+    console.log(allPlants)
 
     // console.log(unsortedPlants)
 
@@ -383,6 +387,7 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
                             }}>Edit This Zone
                             </button>
                         }
+                        <button className="edit_button">Submit Changes</button>
                     </div>
                 </div>
             </div>

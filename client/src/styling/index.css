@@ -34,6 +34,13 @@ body {
   /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
+.tag {
+  font-size: 9pt;
+  font-weight: 600;
+  margin-top: -40px;
+  padding-bottom: 50px;
+}
+
 #title span{
   color: #16330a;
 }

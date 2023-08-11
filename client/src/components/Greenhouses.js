@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { greenhousesMockData } from "../mockData";
-import axios from "axios";
 import "../styling/greenhouses.css";
 import Greenhouse from "./Greenhouse";
 
@@ -9,9 +8,10 @@ function Greenhouses({ loggedIn }) {
 
   useEffect(() => {
     // Fetch current greenhouses from the API and set the state
-    axios.get(`/api/greenhouses/`)
-      .then(response => {
-        setGreenhouses(response.data);
+    fetch('/greenhouses')
+      .then(response => response.json())
+      .then(data => {
+        setGreenhouses(data);
       })
       .catch(error => {
         console.error('Error fetching greenhouses:', error);
@@ -20,9 +20,16 @@ function Greenhouses({ loggedIn }) {
 
   const handleAddGreenhouse = () => {
     // Add a new greenhouse via API and update the state
-    axios.post(`/api/greenhouses`)
-      .then(response => {
-        setGreenhouses([...greenhouses, response.data]);
+    fetch('/greenhouses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    })
+      .then(response => response.json())
+      .then(newGreenhouse => {
+        setGreenhouses([...greenhouses, newGreenhouse]);
       })
       .catch(error => {
         console.error('Error adding greenhouse:', error);

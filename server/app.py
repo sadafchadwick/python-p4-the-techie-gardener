@@ -30,58 +30,6 @@ CORS(app)
 def index():
     return '<h1>The Techie Gardener</h1>'
 
-# class Users(Resource):
-#     def get(self):
-#         users = [user.to_dict() for user in User.query.all()]
-#         return make_response(users, 200)
-
-#     def post(self):
-#         try:
-#             data = request.get_json()
-#             new_user = User(
-#                 name=data['name'],
-#                 greenhouse_id=data['greenhouse_id']
-#             )
-#         except ValueError:
-#             return make_response({"errors": ['validation errors']}, 400)
-
-#         db.session.add(new_user)
-#         db.session.commit()
-#         return make_response(new_user.to_dict(), 201)
-
-# api.add_resource(Users, '/users')
-
-# class UsersById(Resource):
-#     def get(self, id):
-#         user = User.query.filter_by(id=id).first()
-#         if not user:
-#             return make_response({"error": "User does not exist!"}, 404)
-#         return make_response(user.to_dict())
-
-#     def patch(self, id):
-#         try:
-#             user = User.query.filter_by(id=id).first()
-#             data = request.get_json()
-#             for attr in data:
-#                 setattr(user, attr, data[attr])
-#             db.session.commit()
-#             return make_response(user.to_dict(), 202)
-#         except AttributeError:
-#             return make_response({"error": "User does not exist!"}, 404)
-#         except ValueError:
-#             return make_response({"errors": ["validation errors"]}, 400)
-
-#     def delete(self, id):
-#         try:
-#             user = User.query.filter_by(id=id).first()
-#         except:
-#             return make_response({"error": "User not found"}, 404)
-
-#         db.session.delete(user)
-#         db.session.commit()
-#         return make_response({}, 204)
-
-# api.add_resource(UsersById, '/users/<int:id>')
 
 class Greenhouses(Resource):
     def get(self):
@@ -205,6 +153,7 @@ class Plants(Resource):
             data = request.get_json()
             new_plant = Plant(
                 name = data['name'],
+                planted_on = data['planted_on'],
                 diameter = data['diameter'],
                 height = data['height'],
                 expected_yield = data['expected_yield'],
@@ -212,7 +161,8 @@ class Plants(Resource):
                 moisture_range = data['moisture_range'],
                 sunlight_range = data['sunlight_range'],
                 symbiotic_relations = data['symbiotic_relations'],
-                growth_time = data['growth_time']
+                growth_time = data['growth_time'],
+                color = data['color']
             )
         except ValueError:
             return make_response({"errors": ['validation errors']}, 400)
