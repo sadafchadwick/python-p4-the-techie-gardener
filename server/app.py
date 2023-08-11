@@ -85,7 +85,6 @@ class UsersById(Resource):
 api.add_resource(UsersById, '/users/<int:id>')
 
 
-
 class Greenhouses(Resource):
     def get(self):
         greenhouses = [greenhouse.to_dict() for greenhouse in Greenhouse.query.all()]

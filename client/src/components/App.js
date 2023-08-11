@@ -21,6 +21,9 @@ function App() {
     setLoggedIn(false);
   };
 
+  const [unsortedPlants, setUnsortedPlants] = useState([])
+  console.log(unsortedPlants)
+
   return (
     <div className="background">
       <h1 id="title"><span>the </span>Techie Gardener</h1>
@@ -36,11 +39,11 @@ function App() {
         </Route>
 
         <Route path="/zones">
-          {loggedIn ? <Zones /> : <Redirect to="/login" />}
+          {loggedIn ? <Zones unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants}/> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/plants">
-          {loggedIn ? <Plants /> : <Redirect to="/login" />}
+          {loggedIn ? <Plants unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants}/> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">

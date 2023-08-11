@@ -2,55 +2,55 @@ import "../styling/zone.css"
 
 import React, { useRef, useEffect, useState } from "react"
 
-function Zones() {
+function Zones({unsortedPlants, setUnsortedPlants}) {
     //placeholder user info
-    const user = 
-        {
-            id: 1,
-            name: 'Nolan',
-            greenhouses: [
-                {
-                    id: 1,
-                    name: 'Backyard',
-                    zones: [
-                        {
-                            id: 1,
-                            plantlist: []
-                        },
-                        {
-                            id: 2,
-                            plantlist: []
-                        },
-                        {
-                            id: 3,
-                            plantlist: []
-                        }
-                    ],
-                    city: 1,
-                },
-                {
-                    id: 2,
-                    name: 'Frontyard',
-                    zones: [
-                        {
-                            id: 1,
-                            plantlist: []
-                        },
-                        {
-                            id: 2,
-                            plantlist: []
-                        }
-                    ],
-                    city: 2,
-                },
-            ]
-        }
+    // const user = 
+    //     {
+    //         id: 1,
+    //         name: 'Nolan',
+    //         greenhouses: [
+    //             {
+    //                 id: 1,
+    //                 name: 'Backyard',
+    //                 zones: [
+    //                     {
+    //                         id: 1,
+    //                         plantlist:
+    //                     },
+    //                     {
+    //                         id: 2,
+    //                         plantlist: 
+    //                     },
+    //                     {
+    //                         id: 3,
+    //                         plantlist:
+    //                     }
+    //                 ],
+    //                 city: 1,
+    //             },
+    //             {
+    //                 id: 2,
+    //                 name: 'Frontyard',
+    //                 zones: [
+    //                     {
+    //                         id: 1,
+    //                         plantlist:
+    //                     },
+    //                     {
+    //                         id: 2,
+    //                         plantlist:
+    //                     }
+    //                 ],
+    //                 city: 2,
+    //             },
+    //         ]
+    //     }
     //console.log(user.greenhouses[0].zones[0].id[0])
     
     //planter info
     const [selectedPlant, setSelectedPlant] = useState('')
     const [quantity, setQuantity] = useState('')
-    const [unsortedPlants, setUnsortedPlants] = useState([])
+    // const [unsortedPlants, setUnsortedPlants] = useState([])
     //window size state
     const [windowSize, setWindowSize] = useState({
         height: window.innerHeight,
@@ -130,32 +130,16 @@ function Zones() {
         setTempDeleteCount(e.target.value)
     }
 
-    // const [selectedZonePlants, setSelectedZonePlants] = useState([])
-
+    //adds new plants (with quantity) to unsorted plant list
     const handleSubmit = (e) => {
         e.preventDefault()
         if (selectedPlant && quantity) {
             for (let i = 0; i < quantity; i++){
-                // selectedZonePlants.push(selectedPlant)
                 unsortedPlants.push(selectedPlant)
             }
             setQuantity('')
         }
     }
-
-    // console.log(selectedZonePlants)
-
-    //adds new plants (with quantity) to unsorted plant list
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     if (selectedPlant && quantity) {
-    //         for (let i = 0; i < quantity; i++){
-    //             // selectedZonePlants.push(selectedPlant)
-    //             unsortedPlants.push(selectedPlant)
-    //         }
-    //         setQuantity('')
-    //     }
-    // }
 
     // actually deletes the plant after double clicked
     const deletePlant = (index) => {
@@ -209,7 +193,7 @@ function Zones() {
         }
     }, [unsortedPlants.length]);
 
-    //changes state of button selected for temperature
+    //changes state of button selected for temp
     const [tempIsActive, setTempIsActive] = useState(false)
     const handleToggle = () => {
         setTempIsActive(prevState => !prevState)
@@ -224,41 +208,32 @@ function Zones() {
     }
 
     //renders plants and sets the span by the plant diameter
-    function renderPlants(plantbed) {
-        console.log('render plants starting')
-        if (editingPlantBedId == plantbed) {
-            console.log('render plants conditions satisfied')
-            unsortedPlants.map((plant, index) => {
-                const plantSize = plant.diameter * inch;
-                const multiplesOfFour = Math.ceil(plant.diameter / 4) * 4;
-            
-                // Determine the background color based on tempIsActive
-                const backgroundColor = tempIsActive ? tempColors[plant.temperature_range] : plant.color;
-            
-                return (
-                    <div className="plant_container" style={{ gridRow: `span ${multiplesOfFour}`, gridColumn: `span ${multiplesOfFour}` }} key={index}>
-                        <div
-                            id={`plant-${plant.id}`}
-                            key={unsortedPlants.index}
-                            style={{
-                                width: plantSize + 'px',
-                                height: plantSize + 'px',
-                                backgroundColor: backgroundColor,
-                            }}
-                            className="plant"
-                            onClick={() => moreInfoClick(index)}
-                            onDoubleClick={() => handlePlantDoubleClick(index)}
-                            ref={plantRef}
-                        ></div>
-                    </div>
-                );
-            })
-        } else {
-            return console.log('something got screwed up')
-        }
-    };
+    const renderPlants = unsortedPlants.map((plant, index) => {
+        const plantSize = plant.diameter * inch;
+        const multiplesOfFour = Math.ceil(plant.diameter / 4) * 4;
+    
+        // Determine the background color based on tempIsActive
+        const backgroundColor = tempIsActive ? tempColors[plant.temperature_range] : plant.color;
+    
+        return (
+            <div className="plant_container" style={{ gridRow: `span ${multiplesOfFour}`, gridColumn: `span ${multiplesOfFour}` }} key={index}>
+                <div
+                    id={`plant-${plant.id}`}
+                    key={unsortedPlants.index}
+                    style={{
+                        width: plantSize + 'px',
+                        height: plantSize + 'px',
+                        backgroundColor: backgroundColor,
+                    }}
+                    className="plant"
+                    onClick={() => moreInfoClick(index)}
+                    onDoubleClick={() => handlePlantDoubleClick(index)}
+                    ref={plantRef}
+                ></div>
+            </div>
+        );
+    });
 
-    //counts the number of each plant in unsortedPlants
     const nameCounts = unsortedPlants.reduce((accumulator, plant) => {
         const name = plant.name
         if (accumulator[name]) {
@@ -279,121 +254,62 @@ function Zones() {
             </div>
         )
     })
-    
-    const zonesArray = [user.greenhouses[0].zones]
 
-    const [editingPlantBedId, setEditingPlantBedId] = useState(null);
     const [isEditing, setIsEditing] = useState(false)
 
     const handleEdit = (e) => {
-        console.log(e)
         setIsEditing(!isEditing)
     }
 
-    const editZones = (plantBedId) => {
-        setEditingPlantBedId(plantBedId);
-    };
-
-    console.log(editingPlantBedId)
-
-    // const renderZones = zonesArray.map((zone) => {
-    // return zone.map((plantbed) => {
-    //     return (
-    //         <div className="page_container" key={plantbed.id}>
-    //             <div className="single_zone_container">
-    //                 <div className="plantbed_container">
-    //                     <div className="plantbed" style={plantBedGrid} ref={divRef}>
-    //                         {renderPlants}
-    //                     </div>
-    //                     <div className="plant_info_container">
-    //                         <div className="plant_info_box">
-    //                             {plantInfo}
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //             <div className="zone_container">
-    //             <div className="plantbed_info">
-    //                 <div className="plantbed_info_sub">
-    //                     <h2>{`Zone ${plantbed.id}`}</h2>
-    //                     {isEditing ? null :
-    //                         <button onClick={() => {
-    //                             editZones(plantbed.id)
-    //                             handleEdit()
-    //                         }}>Edit This Zone
-    //                         </button>
-    //                     }
-    //                 </div>
-    //                 <h6 className="expected_disclaimer">Expected Yield is the Amount of Plants Expected to Harvest From These Seeds*</h6>
-    //                 {/* {editingPlantBedId === plantbed.id && (
-    //                 // Render editing interface for the specific plant bed here
-    //                 // For example, an input field or other controls
-    //                 )} */}
-    //             </div>
-    //             </div>
-    //         </div>
-    //     );
-    // });
-    // });
-
-    const renderZones = zonesArray.map((zone) => {
-        return zone.map((plantbed) => {
-            return (
-                <div className="page_container" key={plantbed.id}>
-                    <div className="single_zone_container">
-                        <div className="plantbed_container">
-                            <div className="plantbed" style={plantBedGrid} ref={divRef}>
-                                {editingPlantBedId == plantbed ? renderPlants(plantbed.id) : console.log(plantbed.id)}
-                            </div>
-                            <div className="plant_info_container">
-                                <div className="plant_info_box">
-                                    {plantInfo}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="zone_container">
-                    <div className="plantbed_info">
-                        <div className="plantbed_info_sub">
-                            <h2>{`Zone ${plantbed.id}`}</h2>
-                            {editingPlantBedId == plantbed.id ? 
-                                <form onSubmit = {handleSubmit}>
-                                    <label>
-                                        Select Your Vegetable:
-                                        <select value={selectedPlant.name} onChange={handlePlantChange}>
-                                            <option value=''>Select...</option>
-                                            {allPlants.map(item => (
-                                                <option key={item.id} value={item.name}>
-                                                    {item.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                    <label>
-                                        Quantity:
-                                        <input type='number' value={quantity} onChange={handleQuantityChange} />
-                                    </label>
-                                    <button type='submit'>Add</button>
-                                </form> 
-                                :
-                                <button onClick={() => {
-                                    editZones(plantbed.id)
-                                    handleEdit()
-                                }}>Edit This Zone
-                                </button>
-                            }
-                        </div>
-                        <h6 className="expected_disclaimer">Expected Yield is the Amount of Plants Expected to Harvest From These Seeds*</h6>
-                    </div>
-                    </div>
-                </div>
-            );
-        });
-    });
-
     return (
         <div className="body_page">
-            {renderZones}
+            <div className="page_container">
+                <div className="zone_container">
+                    <div className="plantbed_container">
+                        <div className="plantbed" style={plantBedGrid} ref={divRef}>
+                            {renderPlants}
+                        </div>
+                        <div className="plant_info_container">
+                            <div className="plant_info_box">
+                                {plantInfo}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="zone_container">
+                    <div className="plantbed_info">
+                        <h2>Zone</h2>
+                        <h6 className="expected_disclaimer">Expected Yield is the Amount of Plants Expected to Harvest From These Seeds*</h6>
+                    </div>
+                    <div className="edit_container">
+                        {isEditing ? 
+                            <form onSubmit = {handleSubmit}>
+                                <label>
+                                    Select Your Vegetable:
+                                    <select value={selectedPlant.name} onChange={handlePlantChange}>
+                                        <option value=''>Select...</option>
+                                        {allPlants.map(item => (
+                                            <option key={item.id} value={item.name}>
+                                                {item.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </label>
+                                <label>
+                                    Quantity:
+                                    <input type='number' value={quantity} onChange={handleQuantityChange} />
+                                </label>
+                                <button type='submit'>Add</button>
+                            </form>
+                            :
+                            <button className="edit_button" onClick={() => {
+                                handleEdit()
+                            }}>Edit This Zone
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
             <div className="submit_footer">
                 <div className="button_container">
                     View By Temp
@@ -401,28 +317,6 @@ function Zones() {
                         {tempIsActive ? '' : ''}
                     </button>
                 </div>
-                {/* {isEditing ? 
-                    <form onSubmit = {handleSubmit}>
-                        <label>
-                            Select Your Vegetable:
-                            <select value={selectedPlant.name} onChange={handlePlantChange}>
-                                <option value=''>Select...</option>
-                                {allPlants.map(item => (
-                                    <option key={item.id} value={item.name}>
-                                        {item.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                        <label>
-                            Quantity:
-                            <input type='number' value={quantity} onChange={handleQuantityChange} />
-                        </label>
-                        <button type='submit'>Add</button>
-                    </form>
-                    :
-                    null
-                } */}
             </div>
         </div>
     );
