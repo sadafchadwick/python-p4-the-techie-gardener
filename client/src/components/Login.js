@@ -27,6 +27,7 @@ function Login({ onLogin }) {
             type="text"
             id="username"
             value={username}
+            // onChange={(e) => setUsername('nolan')}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -36,6 +37,7 @@ function Login({ onLogin }) {
             type="password"
             id="password"
             value={password}
+            // onChange={(e) => setPassword('nolan')}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

@@ -9,7 +9,7 @@ import Login from "./Login"; // Import your Login component
 import "../styling/index.css";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const handleLogin = () => {
     // Simulate a successful login
