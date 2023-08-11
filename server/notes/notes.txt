@@ -94,3 +94,31 @@ app.py User Class
 # @app.errorhandler( NotFound )
 # def not_found( e ):
 #     return { 'error': 'look elsewhere for thy backend route! ' + str( e ) }
+
+
+# class PlantBed(db.Model, SerializerMixin):
+#     __tablename__ = 'plant_beds'
+
+#     id=db.Column(db.Integer, primary_key=True)
+
+#     #Foreign Keys
+#     plant_id=db.Column(db.Integer, db.ForeignKey('plants.id'))
+#     zone_id=db.Column(db.Integer, db.ForeignKey('zones.id'))
+
+#     #relationships
+#     zone= db.relationship('Zone', back_populates ='plant_beds')
+#     plants= db.relationship('Plant', back_populates ='plant_bed')
+
+#     # zone = association_proxy('plants', 'zones')
+#     # plants = association_proxy('zones', 'plants')
+
+# class User (db.Model, SerializerMixin):
+#     __tablename__='users'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String)
+#     greenhouse_id= db.Column(db.Integer, db.ForeignKey('greenhouses.id'))
+
+#     # relationships
+#     greenhouses =  association_proxy('user', 'greenhouse')
+

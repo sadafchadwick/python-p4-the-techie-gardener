@@ -8,6 +8,7 @@ import Home from "./Home";
 import Login from "./Login"; // Import your Login component
 import "../styling/index.css";
 import Zone from "./Zone";
+import AboutUs from "./AboutUs";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -33,6 +34,10 @@ function App() {
       <Switch>
         <Route exact path="/home">
           <Home />
+        </Route>
+
+        <Route exact path="/aboutus">
+          <AboutUs />
         </Route>
 
         <Route path="/greenhouses">

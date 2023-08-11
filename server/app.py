@@ -30,58 +30,58 @@ CORS(app)
 def index():
     return '<h1>The Techie Gardener</h1>'
 
-class Users(Resource):
-    def get(self):
-        users = [user.to_dict() for user in User.query.all()]
-        return make_response(users, 200)
+# class Users(Resource):
+#     def get(self):
+#         users = [user.to_dict() for user in User.query.all()]
+#         return make_response(users, 200)
 
-    def post(self):
-        try:
-            data = request.get_json()
-            new_user = User(
-                name=data['name'],
-                greenhouse_id=data['greenhouse_id']
-            )
-        except ValueError:
-            return make_response({"errors": ['validation errors']}, 400)
+#     def post(self):
+#         try:
+#             data = request.get_json()
+#             new_user = User(
+#                 name=data['name'],
+#                 greenhouse_id=data['greenhouse_id']
+#             )
+#         except ValueError:
+#             return make_response({"errors": ['validation errors']}, 400)
 
-        db.session.add(new_user)
-        db.session.commit()
-        return make_response(new_user.to_dict(), 201)
+#         db.session.add(new_user)
+#         db.session.commit()
+#         return make_response(new_user.to_dict(), 201)
 
-api.add_resource(Users, '/users')
+# api.add_resource(Users, '/users')
 
-class UsersById(Resource):
-    def get(self, id):
-        user = User.query.filter_by(id=id).first()
-        if not user:
-            return make_response({"error": "User does not exist!"}, 404)
-        return make_response(user.to_dict())
+# class UsersById(Resource):
+#     def get(self, id):
+#         user = User.query.filter_by(id=id).first()
+#         if not user:
+#             return make_response({"error": "User does not exist!"}, 404)
+#         return make_response(user.to_dict())
 
-    def patch(self, id):
-        try:
-            user = User.query.filter_by(id=id).first()
-            data = request.get_json()
-            for attr in data:
-                setattr(user, attr, data[attr])
-            db.session.commit()
-            return make_response(user.to_dict(), 202)
-        except AttributeError:
-            return make_response({"error": "User does not exist!"}, 404)
-        except ValueError:
-            return make_response({"errors": ["validation errors"]}, 400)
+#     def patch(self, id):
+#         try:
+#             user = User.query.filter_by(id=id).first()
+#             data = request.get_json()
+#             for attr in data:
+#                 setattr(user, attr, data[attr])
+#             db.session.commit()
+#             return make_response(user.to_dict(), 202)
+#         except AttributeError:
+#             return make_response({"error": "User does not exist!"}, 404)
+#         except ValueError:
+#             return make_response({"errors": ["validation errors"]}, 400)
 
-    def delete(self, id):
-        try:
-            user = User.query.filter_by(id=id).first()
-        except:
-            return make_response({"error": "User not found"}, 404)
+#     def delete(self, id):
+#         try:
+#             user = User.query.filter_by(id=id).first()
+#         except:
+#             return make_response({"error": "User not found"}, 404)
 
-        db.session.delete(user)
-        db.session.commit()
-        return make_response({}, 204)
+#         db.session.delete(user)
+#         db.session.commit()
+#         return make_response({}, 204)
 
-api.add_resource(UsersById, '/users/<int:id>')
+# api.add_resource(UsersById, '/users/<int:id>')
 
 class Greenhouses(Resource):
     def get(self):
