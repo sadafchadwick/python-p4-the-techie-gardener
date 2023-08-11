@@ -46,6 +46,7 @@ function Greenhouse({ id }) {
   return (
     <div className="greenhouse-card">
       <h3>Greenhouse {id}</h3>
+      <h1><span>Air Temp:</span><span>humidity:</span></h1>
       <h4>Zones:</h4>
       <ul>
         {currentZones.map((zone) => (
