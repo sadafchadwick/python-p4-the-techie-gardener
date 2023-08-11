@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import "../styling/greenhouses.css";
 
-function Greenhouses() {
+function Greenhouses({ loggedIn }) {
   const [greenhouses, setGreenhouses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,28 +25,19 @@ function Greenhouses() {
       });
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
 
   return (
     <div>
       <h2>Greenhouses</h2>
-      <ul>
+      <div className="greenhouse-card-grid">
         {greenhouses.map((greenhouse) => (
-          <li key={greenhouse.id}>
-            {/* Render relevant information about the greenhouse */}
-            <p>ID: {greenhouse.id}</p>
+          <div key={greenhouse.id} className="greenhouse-card">
+            <h3>Greenhouse {greenhouse.id}</h3>
             <p>Air Temperature: {greenhouse.air_temp}</p>
             <p>Humidity: {greenhouse.humidity}</p>
-            {/* Add more attributes as needed */}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
