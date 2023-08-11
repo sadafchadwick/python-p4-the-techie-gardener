@@ -51,6 +51,28 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
     const [selectedPlant, setSelectedPlant] = useState('')
     const [quantity, setQuantity] = useState('')
     // const [unsortedPlants, setUnsortedPlants] = useState([])
+
+    const [showFooter, setShowFooter] = useState(false)
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            const mouseY = e.clientY
+            const windowHeight = window.innerHeight
+            const threshold = 50
+            const distanceFromBottom = windowHeight - mouseY
+
+            if (distanceFromBottom <= threshold) {
+                setShowFooter(true)
+            } else {
+                setShowFooter(false)
+            }
+        }
+        document.addEventListener('mousemove', handleMouseMove)
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove)
+        }
+    }, [])
+
     //window size state
     const [windowSize, setWindowSize] = useState({
         height: window.innerHeight,
@@ -261,6 +283,8 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
         setIsEditing(!isEditing)
     }
 
+    console.log(unsortedPlants)
+
     return (
         <div className="body_page">
             <div className="page_container">
@@ -283,24 +307,26 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
                     </div>
                     <div className="edit_container">
                         {isEditing ? 
-                            <form onSubmit = {handleSubmit}>
-                                <label>
-                                    Select Your Vegetable:
-                                    <select value={selectedPlant.name} onChange={handlePlantChange}>
-                                        <option value=''>Select...</option>
-                                        {allPlants.map(item => (
-                                            <option key={item.id} value={item.name}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </label>
-                                <label>
-                                    Quantity:
-                                    <input type='number' value={quantity} onChange={handleQuantityChange} />
-                                </label>
-                                <button type='submit'>Add</button>
-                            </form>
+                            <div id="submit_container">      
+                                <form onSubmit = {handleSubmit}>
+                                    <label>
+                                        {/* Select Your Vegetable: */}
+                                        <select className='dropdown' value={selectedPlant.name} onChange={handlePlantChange}>
+                                            <option value=''>Select Your Vegetable...</option>
+                                            {allPlants.map(item => (
+                                                <option key={item.id} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </label>
+                                    <label>
+                                        {/* Quantity: */}
+                                        <input className='input_field' type='number' value={quantity} onChange={handleQuantityChange} />
+                                    </label>
+                                    <button className="add_button" type='submit'>ADD</button>
+                                </form>
+                            </div>
                             :
                             <button className="edit_button" onClick={() => {
                                 handleEdit()

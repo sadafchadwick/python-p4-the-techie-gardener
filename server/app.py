@@ -21,7 +21,6 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 api=Api(app)
-# bcrypt = Bcrypt( app )
 
 CORS(app)
 
@@ -83,7 +82,6 @@ class UsersById(Resource):
         return make_response({}, 204)
 
 api.add_resource(UsersById, '/users/<int:id>')
-
 
 class Greenhouses(Resource):
     def get(self):

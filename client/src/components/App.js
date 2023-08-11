@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import Home from "./Home";
 import Login from "./Login"; // Import your Login component
 import "../styling/index.css";
+import Zone from "./Zone";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -28,7 +29,7 @@ function App() {
     <div className="background">
       <h1 id="title"><span>the </span>Techie Gardener</h1>
       <NavBar loggedIn={loggedIn} onLogout={handleLogout} />
-    
+
       <Switch>
         <Route exact path="/home">
           <Home />
@@ -38,12 +39,14 @@ function App() {
           {loggedIn ? <Greenhouses /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/zone/:id" component={Zone} />
+
         <Route path="/zones">
-          {loggedIn ? <Zones unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants}/> : <Redirect to="/login" />}
+          {loggedIn ? <Zones unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants} /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/plants">
-          {loggedIn ? <Plants unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants}/> : <Redirect to="/login" />}
+          {loggedIn ? <Plants unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants} /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">
