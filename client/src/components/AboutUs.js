@@ -3,17 +3,17 @@ function AboutUs() {
     return (
         <div className="App">
             <span>Grow intelligently. Grow vibrantly. Grow with The Techie Gardener.</span>
-            {/* <img src={`https://cdnintech.com/media/chapter/74913/1512345123/media/F3.png`} alt="Greenhouse with tech schematic"
-                style={{
-                    height: "400px", width: "40%",
-                    display: "flex",
-                    justifyContent: "center",
-                    backgroundColor: "orange",
-                    color: "white",
-                    borderRadius: "25%",
-                    padding: 10,
-                }}
-            /> */}
+            <img src={`https://cdnintech.com/media/chapter/74913/1512345123/media/F3.png`} alt={"Greenhouse with tech schematic" }
+                // style={{
+                //     height: "400px", width: "40%",
+                //     display: "flex",
+                //     justifyContent: "center",
+                //     backgroundColor: "orange",
+                //     color: "white",
+                //     borderRadius: "25%",
+                //     padding: 10,
+                // }}
+            /> 
 
             <h3 style={{ fontSize: "50px" }}>Welcome to The Techie Gardener: Where Innovation Meets Nature's Canvas</h3>
             <p style={{ fontSize: "25px", fontFamily: "Helvetica", lineHeight: 2, padding: 120 }}>
