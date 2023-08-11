@@ -24,7 +24,7 @@
     justify-content: space-between;
     max-width: 1000px;
     width: 100%;
-    margin-top: -185px;
+    margin-top: -195px;
     /* padding-bottom: 100px; */
     /* background-color: blueviolet; */
 }
@@ -39,6 +39,100 @@
 
 .edit_button {
     background-color: #9dd685;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.edit_button:hover {
+    background-color: #16330a;
+    transform: scale(1.3)
+}
+
+.add_button {
+    background-color: #16330a; 
+    color: white;
+    border: none;
+    border-radius: 20px 20px 20px 20px;
+    height: 35px;
+    width: 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    /* padding-right: 34px;  */
+    margin-left: 10px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+};
+
+.add_button:hover {
+    transform: scale(1.3);
+}
+
+#submit_container {
+    width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: blueviolet; */
+    /* flex-direction: row; */
+    /* align-items: center; */
+}
+
+.input_field {
+    border: 2px solid #16330a;
+    border-radius: 0 20px 20px 0;
+    box-shadow: none;
+    background-color: #9dd685;
+    width: 250px;
+    height: 24px;
+    transition: transform 0.3s ease-in-out;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    /* margin-right: 10px; */
+}
+
+.input_field:hover {
+    border: 2px solid #16330a;
+    border-radius: 20px 20px 20px 20px;
+    transform: scale(1.3);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button {
+    appearance: none;
+}
+
+.dropdown {
+    border: 2px solid #16330a;
+    border-right: none;
+    border-radius: 20px 0 0 20px;
+    box-shadow: none;
+    background-color: #9dd685;
+    width: 250px;
+    height: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    appearance: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dropdown:hover {
+    border: 2px solid #16330a;
+    border-radius: 20px 20px 20px 20px;
+    transform: scale(1.3);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .plantbed_container {
@@ -169,7 +263,7 @@ h6 {
 }
 
 .submit_footer {
-    /* background-color: blue; */
+    background-color: #16330a;
     position: sticky;
     bottom: 0;
     padding-top: 20px;
@@ -177,13 +271,37 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 75px 75px 0 0;
 }
+
+/* .submit_footer {
+    background-color: #16330a;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.body_page {
+    min-height: calc(100vh - 50px);
+} */
+
+/* .body_page {
+    background-color: coral;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
 
 .button_container {
     display: flex;
     align-items: center;
     padding-left: 30px;
     padding-right: 30px;
+    /* background-color: aqua; */
 }
 
 .toggle_button {
