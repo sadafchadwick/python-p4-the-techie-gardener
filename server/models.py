@@ -15,6 +15,7 @@ class User (db.Model, SerializerMixin):
     # relationships
     greenhouses =  association_proxy('user', 'greenhouse')
 
+
 class Greenhouse(db.Model, SerializerMixin):
     __tablename__='greenhouses'
 

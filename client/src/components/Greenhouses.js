@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import axios from "axios";
 import "../styling/greenhouses.css";
 
 function Greenhouses({ loggedIn }) {
@@ -8,23 +8,31 @@ function Greenhouses({ loggedIn }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/greenhouses")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setGreenhouses(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+    fetchGreenhousesData();
   }, []);
 
+  const fetchGreenhousesData = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:5555/greenhouses");
+      setGreenhouses(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  const handleAddZone = async (greenhouseId) => {
+    try {
+      // Send a POST request to add a new zone
+      await axios.post(`/api/greenhouses/${greenhouseId}/zones`);
+      
+      // Fetch the updated greenhouses data and update the state
+      await fetchGreenhousesData();
+    } catch (error) {
+      console.error('Error adding zone:', error);
+    }
+  };
 
   return (
     <div>
@@ -33,8 +41,13 @@ function Greenhouses({ loggedIn }) {
         {greenhouses.map((greenhouse) => (
           <div key={greenhouse.id} className="greenhouse-card">
             <h3>Greenhouse {greenhouse.id}</h3>
-            <p>Air Temperature: {greenhouse.air_temp}</p>
-            <p>Humidity: {greenhouse.humidity}</p>
+            <h4>Zones:</h4>
+            <ul>
+              {greenhouse.zones.map((zone) => (
+                <li key={zone.id}>Zone {zone.id}</li>
+              ))}
+            </ul>
+            <button onClick={() => handleAddZone(greenhouse.id)}>Add Zone</button>
           </div>
         ))}
       </div>
