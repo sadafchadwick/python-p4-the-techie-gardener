@@ -24,11 +24,12 @@ function App() {
   };
 
   const [unsortedPlants, setUnsortedPlants] = useState([])
-  // console.log(unsortedPlants)
+  console.log(unsortedPlants)
 
   return (
     <div className="background">
       <h1 id="title"><span>the </span>Techie Gardener</h1>
+      <h4 className="tag">Grow intelligently. Grow vibrantly. Grow with The Techie Gardener.</h4>
       <NavBar loggedIn={loggedIn} onLogout={handleLogout} />
 
       <Switch>
@@ -44,7 +45,7 @@ function App() {
           {loggedIn ? <Greenhouses /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/zone/:id" component={Zone} />
+        <Route path="/zone/${id}" component={Zone} />
 
         <Route path="/zones">
           {loggedIn ? <Zones unsortedPlants={unsortedPlants} setUnsortedPlants={setUnsortedPlants} /> : <Redirect to="/login" />}

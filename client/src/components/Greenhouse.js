@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { zonesMockData } from "../mockData";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
 import "../styling/greenhouses.css";
 import Zone from "./Zone";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 function Greenhouse({ id }) {
   const [currentZones, setCurrentZones] = useState([]);
 
   useEffect(() => {
     // Fetch current zones for the greenhouse from the API and set the state
-    axios.get(`/api/zones`)
-      .then(response => {
-        setCurrentZones(response.data);
+    fetch(`/greenhouses/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        setCurrentZones(data.zones);
       })
       .catch(error => {
         console.error('Error fetching zones:', error);
       });
-
-    setCurrentZones(zonesMockData[id] || []);
   }, [id]);
 
   const handleDeleteZone = (zoneId) => {
     // Delete the zone via API and update the state
-    axios.delete(`/api/zones/${zoneId}`)
+    fetch(`/zones/${zoneId}`, { method: "DELETE" })
       .then(() => {
         setCurrentZones(currentZones.filter(zone => zone.id !== zoneId));
       })
@@ -34,9 +31,10 @@ function Greenhouse({ id }) {
 
   const handleAddZone = () => {
     // Add a new zone via API and update the state
-    axios.post(`/api/greenhouses/${id}/zones`)
-      .then(response => {
-        setCurrentZones([...currentZones, response.data]);
+    fetch('/zones', { method: "POST" })
+      .then(response => response.json())
+      .then(data => {
+        setCurrentZones([...currentZones, data]);
       })
       .catch(error => {
         console.error('Error adding zone:', error);
@@ -53,14 +51,14 @@ function Greenhouse({ id }) {
           <li className="greenhouse-card-listitem" key={zone.id}>
             <span>Zone {zone.id}</span>
             <div>
-              <NavLink to={`/zone/${zone.id}`}>View</NavLink>
+              <NavLink to={`/zones/${zone.id}`}>View</NavLink>
               &nbsp;
               <button onClick={() => handleDeleteZone(zone.id)}>X</button>
             </div>
           </li>
         ))}
       </ul>
-      {currentZones.length < 5 && <button onClick={() => handleAddZone}>Add Zone</button>}
+      {currentZones.length < 5 && <button onClick={handleAddZone}>Add Zone</button>}
     </div>
   );
 }
