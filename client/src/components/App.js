@@ -23,7 +23,7 @@ function App() {
   };
 
   const [unsortedPlants, setUnsortedPlants] = useState([])
-  console.log(unsortedPlants)
+  // console.log(unsortedPlants)
 
   return (
     <div className="background">

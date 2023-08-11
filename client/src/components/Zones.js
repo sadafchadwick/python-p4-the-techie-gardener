@@ -216,26 +216,77 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
     }, [unsortedPlants.length]);
 
     //changes state of button selected for temp
-    const [tempIsActive, setTempIsActive] = useState(false)
-    const handleToggle = () => {
-        setTempIsActive(prevState => !prevState)
-        console.log(allPlants[1].temperature_range)
-        console.log(tempColors.filter)
-    }
+    // const [tempIsActive, setTempIsActive] = useState(false)
+    // const handleToggle = () => {
+    //     setTempIsActive(prevState => !prevState)
+    //     // console.log(allPlants[1].temperature_range)
+    //     // console.log(tempColors.filter)
+    // }
+
+    const [displayState, setDisplayState] = useState('base')
+
     const tempColors = {
+        1 : '#bf3a22',
+        2 : '#b5941d',
+        3 : '#228734',
+        4 : '#0f2863'
+    }
+
+    const handleToggleTemp = () => {
+        if (displayState === 'base' || displayState === 'sun' || displayState === 'moist') {
+            setDisplayState('temp');
+        } else if (displayState === 'temp') {
+            setDisplayState('base');
+        }
+    }
+
+    const sunColors = {
+        1 : '#d4aa1e',
+        2 : '#d47f1e',
+        3 : '#ba3a1a'
+    }
+    
+    const handleToggleSun = () => {
+        if (displayState === 'base' || displayState === 'temp' || displayState === 'moist') {
+            setDisplayState('sun');
+        } else if (displayState === 'sun') {
+            setDisplayState('base');
+        }
+    }
+
+    const moistColors = {
         1 : '#36a5e0',
         2 : '#2b7bbd',
         3 : '#1b518f',
         4 : '#0f2863'
     }
 
+    const handleToggleMoist = () => {
+        if (displayState === 'base' || displayState === 'temp' || displayState === 'sun') {
+            setDisplayState('moist');
+        } else if (displayState === 'moist') {
+            setDisplayState('base');
+        }
+    }
+
+    console.log(displayState)
+
     //renders plants and sets the span by the plant diameter
     const renderPlants = unsortedPlants.map((plant, index) => {
         const plantSize = plant.diameter * inch;
         const multiplesOfFour = Math.ceil(plant.diameter / 4) * 4;
     
-        // Determine the background color based on tempIsActive
-        const backgroundColor = tempIsActive ? tempColors[plant.temperature_range] : plant.color;
+        // Determine the background color based on displayState
+        let bgColor;
+        if (displayState === 'sun') {
+            bgColor = sunColors[plant.sunlight_range];
+        } else if (displayState === 'temp') {
+            bgColor = tempColors[plant.temperature_range];
+        } else if (displayState === 'moist') {
+            bgColor = tempColors[plant.moisture_range];
+        } else {
+            bgColor = plant.color;
+        }
     
         return (
             <div className="plant_container" style={{ gridRow: `span ${multiplesOfFour}`, gridColumn: `span ${multiplesOfFour}` }} key={index}>
@@ -245,7 +296,7 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
                     style={{
                         width: plantSize + 'px',
                         height: plantSize + 'px',
-                        backgroundColor: backgroundColor,
+                        backgroundColor: bgColor,
                     }}
                     className="plant"
                     onClick={() => moreInfoClick(index)}
@@ -283,7 +334,7 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
         setIsEditing(!isEditing)
     }
 
-    console.log(unsortedPlants)
+    // console.log(unsortedPlants)
 
     return (
         <div className="body_page">
@@ -310,9 +361,8 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
                             <div id="submit_container">      
                                 <form onSubmit = {handleSubmit}>
                                     <label>
-                                        {/* Select Your Vegetable: */}
                                         <select className='dropdown' value={selectedPlant.name} onChange={handlePlantChange}>
-                                            <option value=''>Select Your Vegetable...</option>
+                                            <option value='' disabled>Select Your Vegetable...</option>
                                             {allPlants.map(item => (
                                                 <option key={item.id} value={item.name}>
                                                     {item.name}
@@ -338,9 +388,21 @@ function Zones({unsortedPlants, setUnsortedPlants}) {
             </div>
             <div className="submit_footer">
                 <div className="button_container">
-                    View By Temp
-                    <button className={`toggle_button ${tempIsActive ? 'active' : ''}`} onClick={handleToggle}>
-                        {tempIsActive ? '' : ''}
+                    View By Temperature
+                    <button className={`toggle_button ${displayState === 'temp' ? 'active' : ''}`} onClick={handleToggleTemp}>
+                        {displayState === 'temp' ? '' : ''}
+                    </button>
+                </div>
+                <div className="button_container">
+                    View By Sunlight
+                    <button className={`toggle_button ${displayState === 'sun' ? 'active' : ''}`} onClick={handleToggleSun}>
+                        {displayState === 'sun' ? '' : ''}
+                    </button>
+                </div>
+                <div className="button_container">
+                    View By Moisture
+                    <button className={`toggle_button ${displayState === 'moist' ? 'active' : ''}`} onClick={handleToggleMoist}>
+                        {displayState === 'moist' ? '' : ''}
                     </button>
                 </div>
             </div>
